@@ -28,4 +28,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::post('/data-by-nid', [ProfileController::class, 'dataByNid'])->name('auth.get-user-by-nid');
+
 require __DIR__.'/auth.php';

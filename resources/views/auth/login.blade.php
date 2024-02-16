@@ -1,47 +1,123 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+@extends('main.auth.auth')
+@section('pageContent')
+    <div class="d-flex flex-column flex-lg-row-fluid w-lg-50 p-10">
+        <!--begin::Form-->
+        <div class="d-flex flex-center flex-column flex-lg-row-fluid">
+            @include('layouts.alert')
+            <!--begin::Wrapper-->
+            <div class="w-lg-500px p-10">
+                <!--begin::Form-->
+                <form class="form w-100" id="kt_sign_in_form"
+                      action="{{route('login')}}" method="post">
+                    @csrf
+                    <!--begin::Heading-->
+                    <div class="text-center mb-11">
+                        <!--begin::Title-->
+                        <h1 class="text-dark fw-bolder mb-3">{{__('admin.Sign In')}}</h1>
+                        <!--end::Title-->
+                    </div>
+                    <!--begin::Heading-->
+                    <!--begin::Input group=-->
+                    <div class="fv-row mb-8">
+                        <!--begin::Nid-->
+                        <div id="nid-group">
+                            <label for="nid">
+                                {{__('admin.Nid')}}
+                            </label>
+                            <input type="text" placeholder="{{__('admin.Nid')}}" name="nid" id="nid" autocomplete="off"
+                                   class="form-control bg-transparent" required/>
+                            <div class="fv-plugins message-container invalid-feedback"></div>
+                        </div>
+                        <!--end::Nid-->
+                        <input type="hidden" name="email" value="">
+                        <input type="hidden" name="password" value="">
+                    </div>
+                    <!--begin::Submit button-->
+                    <div class="d-grid mb-10">
+                        <button type="submit" id="sign_in_submit" class="btn btn-primary">
+                            <!--begin::Indicator label-->
+                            <span class="indicator-label">{{__('admin.Sign In')}}</span>
+                            <!--end::Indicator label-->
+                            <!--begin::Indicator progress-->
+                            <span class="indicator-progress">
+                            {{__('admin.Please wait...')}}
+										<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            <!--end::Indicator progress-->
+                        </button>
+                    </div>
+                    <!--end::Submit button-->
+                    <!--begin::Sign up-->
+                    <div class="text-gray-500 text-center fw-semibold fs-6">
+                        {{__('admin.Don\'t have an account')}}
+                        <a href="{{route('register')}}"
+                           class="link-primary">{{__('admin.Sign up')}}</a></div>
+                    <!--end::Sign up-->
+                </form>
+                <!--end::Form-->
+            </div>
+            <!--end::Wrapper-->
         </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <!--end::Form-->
+        <!--begin::Footer-->
+        <div class="d-flex flex-center flex-wrap px-5">
+            <!--begin::Links-->
+            <div class="d-flex fw-semibold text-primary fs-base">
+                <a href="#" class="px-5" target="_blank">FaceBook</a>
+                <a href="tel:+201067554823"
+                   class="px-5" target="_blank">Contact Us</a>
+            </div>
+            <!--end::Links-->
         </div>
+        <!--end::Footer-->
+    </div>
+@endsection
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-            </label>
-        </div>
+@section('pageScripts')
+    <script>
+        $(document).ready(function () {
+            $('#sign_in_submit').on('click', function () {
+                // prevent default action
+                // event.preventDefault();
+                let submitButton = $(this);
+                submitButton.attr('data-kt-indicator', 'on');
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+                // Disable button to avoid multiple click
+                submitButton.attr('disabled', 'disabled');
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+                let nid = $('input[name="nid"]').val();
+
+                // ajax request to get data by nid
+                $.ajax({
+                    url: '{{route('auth.get-user-by-nid')}}',
+                    type: 'POST',
+                    data: {
+                        _token: '{{csrf_token()}}',
+                        nid: nid
+                    },
+                    success: function (response) {
+                        if (response.status === 'success') {
+                            $('input[name="email"]').val(response.data.email);
+                            $('input[name="password"]').val(nid);
+                            $('input[name="nid"]').addClass('is-valid');
+                            $('#kt_sign_in_form').submit();
+                        } else {
+                            // Enable button
+                            submitButton.removeAttr('disabled');
+                            submitButton.removeAttr('data-kt-indicator');
+                            $('input[name="nid"]').addClass('is-invalid');
+                            $('#nid-group .invalid-feedback').text(response.message);
+                        }
+                    },
+                    error: function (error) {
+                        // Enable button
+                        submitButton.removeAttr('disabled');
+                        submitButton.removeAttr('data-kt-indicator');
+                        $('input[name="nid"]').addClass('is-invalid');
+                        console.log(error);
+                        $('#nid-group .invalid-feedback').text(error.responseJSON.message);
+                    }
+                });
+            });
+        });
+    </script>
+@endsection

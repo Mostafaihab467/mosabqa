@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,5 +57,25 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function dataByNid(Request $request)
+    {
+        // validate nid
+        $request->validate([
+            'nid' => 'required|numeric|digits:14|exists:users,nid',
+        ]);
+        $nid = $request->nid;
+        $user = User::where('nid', $nid)->first();
+        if ($user) {
+            return response()->json([
+                'status' => 'success',
+                'data' => $user,
+            ]);
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => __('admin.User not found'),
+        ]);
     }
 }

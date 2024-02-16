@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use App\Rules\ValidNidRule;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -32,14 +33,26 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'email' => ['nullable', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['nullable', Rules\Password::defaults()],
+            // nid unique, length 14, numeric
+            'nid' => ['required', 'unique:'.User::class, 'digits:14', 'numeric', new ValidNidRule()],
         ]);
+
+        // birth_date
+        $birthDate = getBirthDate($request->nid);
+
+        // gender
+        $gender = getGender($request->nid);
 
         $user = User::create([
             'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'email' => $request->email ?? $request->nid.'@'.env('APP_DOMAIN', 'mgahed.com'),
+            'password' => $request->password ? Hash::make($request->password) : Hash::make($request->nid),
+            'nid' => $request->nid,
+            'birth_date' => $birthDate,
+            'gender' => $gender,
+            'email_verified_at' => now(),
         ]);
 
         event(new Registered($user));
