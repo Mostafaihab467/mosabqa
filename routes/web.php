@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('categories', CategoryController::class)->names('categories');
+    Route::resource('questions', QuestionController::class)->names('questions');
 });
 
 Route::post('/data-by-nid', [ProfileController::class, 'dataByNid'])->name('auth.get-user-by-nid');

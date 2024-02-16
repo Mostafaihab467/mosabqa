@@ -120,27 +120,38 @@
         $('#qType').change(function () {
             $('#count').html(0);
             let type = $(this).val();
+            if(type == ''){
+                $('#sign_up_submit').addClass('disabled pointer-event-none');
+                $('#count').html(0);
+                $('#randomChoose').addClass('disabled pointer-event-none');
+                $('input[type="checkbox"]').prop('checked', false);
+                $('#checkBoxCards').addClass('d-none');
+            } else {
+                $('#sign_up_submit').removeClass('disabled pointer-event-none');
+                $('#randomChoose').removeClass('disabled pointer-event-none');
+                $('#checkBoxCards').removeClass('d-none');
+            }
             let cnt = 0;
             $('.cards').html('');
-            if (type == 'ربع القران') {
+            if (type == 2) { // ربع القران
                 @php
-                    $countQuestions = \App\Models\Question::where('type','ربع القران')->count();
+                    $countQuestions = \App\Models\Question::where('category_id',2)->count();
                 @endphp
                     cnt = {{$countQuestions}};
-            } else if (type == 'نصف القران') {
+            } else if (type == 3) { // نصف القران
                 @php
-                    $countQuestions = \App\Models\Question::where('type','نصف القران')
-                ->orWhere('type','ربع القران')->count();
+                    $countQuestions = \App\Models\Question::where('category_id',3)
+                ->orWhere('category_id', 2)->count();
                 @endphp
                     cnt = {{$countQuestions}};
-            } else if (type == 'ثلاث ارباع القران') {
+            } else if (type == 4) { // ثلاث ارباع القران
                 @php
-                    $countQuestions = \App\Models\Question::where('type','ثلاث ارباع القران')
-                    ->orWhere('type','ربع القران')
-                    ->orWhere('type','نصف القران')->count();
+                    $countQuestions = \App\Models\Question::where('category_id',4)
+                    ->orWhere('category_id', 2)
+                    ->orWhere('category_id', 3)->count();
                 @endphp
                     cnt = {{$countQuestions}};
-            } else if (type == 'القران كاملا') {
+            } else if (type == 5) {
                 @php
                     $countQuestions = \App\Models\Question::get()->count();
                 @endphp
@@ -189,12 +200,29 @@
             }
             $('#count').html(n);
             toastr.info("لقد اخترت " + n + " من 15");
-            if (n == 15 && verifyOTPCode) {
+            if (n == 15 && $('#qType').val() != ''){
                 $('#sign_up_submit').removeClass('disabled pointer-event-none');
             } else {
                 $('#sign_up_submit').addClass('disabled pointer-event-none');
             }
             return true;
+        }
+    </script>
+    <script>
+        function checkRandom() {
+            // let all checkboxes not checked
+            $('input[type="checkbox"]').prop('checked', false);
+
+            // check 15 random checkboxes
+            let n = 0;
+            while (n < 15) {
+                let random = Math.floor(Math.random() * 30);
+                if (!$(`#card${random}`).prop('checked')) {
+                    $(`#card${random}`).prop('checked', true);
+                    n++;
+                }
+            }
+            $('#count').html(15);
         }
     </script>
 @endsection
