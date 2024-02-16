@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Question;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
@@ -11,7 +12,16 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        //
+        $data = Question::with(['category', 'answers'])->get();
+        $result = [
+            'data' => $data,
+            'title' => __('admin.Questions'),
+            'addUrl' => [
+                'url' => route('questions.create'),
+                'text' => __('admin.Add')
+            ]
+        ];
+        return view('pages.questions.index', $result);
     }
 
     /**

@@ -50,6 +50,7 @@ class CategoryController extends Controller
         // create a new category
         $category = Category::create([
             'name' => $request->name,
+            'record_state' => $request->record_state ?? '0',
         ]);
         if ($category) {
             return redirect()->route('categories.index')->with('success', __('admin.Item created successfully'));
@@ -91,10 +92,13 @@ class CategoryController extends Controller
             return redirect()->back()->with('error', __('admin.Failed to update item'))->withErrors($validator)->withInput();
         }
 
+//        return $request->all();
         // update the category
-        $category = Category::find($id);
-        $category->name = $request->name;
-        if ($category->save()) {
+        $category = Category::find($id)->update([
+            'name' => $request->name,
+            'record_state' => $request->record_state ?? '0',
+        ]);
+        if ($category) {
             return redirect()->route('categories.index')->with('success', __('admin.Item updated successfully'));
         }
         return redirect()->back()->with('error', __('admin.Failed to update item'))->withInput();
