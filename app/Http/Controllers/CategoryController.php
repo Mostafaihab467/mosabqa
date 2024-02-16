@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Validator;
 
 class CategoryController extends Controller
 {
@@ -13,7 +14,15 @@ class CategoryController extends Controller
     public function index()
     {
         $data = Category::all();
-        return view('pages.categories.index', compact('data'));
+        $result = [
+            'data' => $data,
+            'title' => __('Categories'),
+            'addUrl' => [
+                'url' => route('categories.create'),
+                'text' => __('Add')
+            ]
+        ];
+        return view('pages.categories.index', $result);
     }
 
     /**
@@ -21,7 +30,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $result = ['title' => __('admin.Add New') . ' ' . __('Category')];
+        return view('pages.categories.edit', $result);
     }
 
     /**
@@ -29,31 +39,65 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validate the request
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255|unique:categories,name',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', __('admin.Failed to create item'))->withErrors($validator)->withInput();
+        }
+
+        // create a new category
+        $category = Category::create([
+            'name' => $request->name,
+        ]);
+        if ($category) {
+            return redirect()->route('categories.index')->with('success', __('admin.Item created successfully'));
+        }
+        return redirect()->back()->with('error', __('admin.Failed to create item'))->withInput();
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Category $category)
+    public function show($id, Request $request)
     {
-        //
+        return $this->edit($id, $request);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit($id, Request $request)
     {
-        //
+        $data = Category::find($id);
+        $result = [
+            'selectedItem' => $data,
+            'title' => __('admin.Edit') . ' ' . $data->name,
+        ];
+        return view('pages.categories.edit', $result);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
-        //
+        // validate the request
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255|unique:categories,name,' . $id,
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', __('admin.Failed to update item'))->withErrors($validator)->withInput();
+        }
+
+        // update the category
+        $category = Category::find($id);
+        $category->name = $request->name;
+        if ($category->save()) {
+            return redirect()->route('categories.index')->with('success', __('admin.Item updated successfully'));
+        }
+        return redirect()->back()->with('error', __('admin.Failed to update item'))->withInput();
     }
 
     /**

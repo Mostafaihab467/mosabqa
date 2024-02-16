@@ -3,7 +3,10 @@
     <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
         <!--begin::Content wrapper-->
         <div class="d-flex flex-column flex-column-fluid">
-            @include('main.master.includes.toolbar')
+            @include('main.master.includes.toolbar', [
+    'title' => 'Dashboard',
+     'addUrl' => ['url' => route('categories.create'), 'text' => __('admin.Add')]
+     )
             {{--<!--begin::Content-->
             <div id="kt_app_content" class="app-content flex-column-fluid">
                 <!--begin::Content container-->

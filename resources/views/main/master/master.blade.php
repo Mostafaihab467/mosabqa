@@ -34,10 +34,11 @@
 
         <!--begin::Wrapper-->
         <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
-        @include('main.master.includes.aside')
+            @include('main.master.includes.aside')
             <!--begin::Main-->
-        @yield('pageContent')
-        <!--end::Main-->
+            @include('layouts.alert')
+            @yield('pageContent')
+            <!--end::Main-->
         </div>
     </div>
     <!--end::Page-->
