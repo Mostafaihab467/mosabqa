@@ -40,7 +40,7 @@
 "Random choose" => "اختيار عشوائي",
 "You choose" => "اختار أنت",
 "From" => "من",
-"Whoops! Something went wrong" => "عفوًا! ",
+"Whoops! Something went wrong" => "عفوًا!",
 "My Profile" => "ملفي",
 "Sign Out" => "خروج",
 "Admin" => "مسؤل",
@@ -73,4 +73,6 @@
 "Record not found" => "لم يتم العثور على السجل",
 "Multi Categories" => "فئات متعددة",
 "Translate all" => "ترجمة الكل",
+"Is Correct" => "صحيح",
+"Delete" => "يمسح",
 ];

@@ -18,7 +18,7 @@
                                            @if($answer->is_correct) checked @endif
                                            name="is_correct"/>
                                     <label class="form-check-label" for="form_checkbox">
-                                        {{__('admin.Is Correct' )}}
+                                        {{__('admin.Is Correct')}}
                                     </label>
                                 </div>
                             </div>
@@ -26,7 +26,7 @@
                                 <a href="javascript:;" data-repeater-delete
                                    class="btn btn-sm btn-light-danger mt-3 mt-md-8">
                                     <i class="fa fa-trash fs-5"></i>
-                                    {{__('admin.Delete' )}}
+                                    {{__('admin.Delete')}}
                                 </a>
                             </div>
                         </div>

@@ -73,4 +73,6 @@
 "Record not found" => "Record not found",
 "Multi Categories" => "Multi Categories",
 "Translate all" => "Translate all",
+"Is Correct" => "Is Correct",
+"Delete" => "Delete",
 ];
