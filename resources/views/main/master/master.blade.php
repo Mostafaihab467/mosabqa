@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{app()->getLocale()}}" dir="{{app()->getLocale()=='ar' ? 'rtl' : 'ltr'}}"
       direction="{{app()->getLocale()=='ar' ? 'rtl' : 'ltr'}}"
-      style="direction: {{app()->getLocale()=='ar' ? 'rtl' : 'ltr'}}">
+      style="direction: {{app()->getLocale()=='ar' ? 'rtl' : 'ltr'}};">
 <!--begin::Head-->
 <head>
     <title></title>
