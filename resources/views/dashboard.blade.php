@@ -6,7 +6,7 @@
             @include('main.master.includes.toolbar', [
     'title' => 'Dashboard',
      'addUrl' => ['url' => route('categories.create'), 'text' => __('admin.Add')]
-     )
+     ])
             {{--<!--begin::Content-->
             <div id="kt_app_content" class="app-content flex-column-fluid">
                 <!--begin::Content container-->
