@@ -17,6 +17,8 @@
     <!--end::Global Stylesheets Bundle-->
 
     @yield('pageScriptHead')
+
+    @yield('pageCsCode')
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -66,6 +68,56 @@
 <script src="{{asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
 <!--end::Custom Javascript-->
 <!--end::Javascript-->
+<script type="text/javascript">
+    function ajaxSubmit($url,$div,$type="POST",$V=null) {
+
+        document.getElementById($div).innerHTML="<div class='d-flex justify-content-center'><div class='spinner-border'><span class='sr-only'>Loading...</span></div></div>";
+
+        $.ajax({
+            type: $type,
+            url: $url,
+            success: function(data) {
+                document.getElementById($div).style.display = "block";
+
+                if($V==1) {
+                    document.getElementById($div).value= data;
+                } else {
+                    document.getElementById($div).innerHTML= data;
+                }
+            },
+            error: function (data, textStatus, errorThrown) {
+                console.log(data);
+            },
+            complete: function (data) {
+                // console.log(data);
+            }
+        });
+    }
+
+    function ajaxFormSubmit($url,$type="POST",$formData=null) {
+
+        $.ajax({
+            url: $url,
+            type: $type,
+            dataType: "JSON",
+            headers: {"X-CSRF-TOKEN": "{{csrf_token()}}"},
+            data: $formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (data, textStatus, errorThrown) {
+                console.log(data);
+            }
+        });
+    }
+
+    function jsUcfirst(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+</script>
 @yield('pageScripts')
 </body>
 <!--end::Body-->

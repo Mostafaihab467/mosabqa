@@ -43,3 +43,21 @@ function getAge($birthDate)
     $age = $birthDate->diff($today)->y;
     return $age;
 }
+
+
+function sites(){
+    return collect([
+        [
+            'title' => 'English',
+            'lang' => 'en',
+            'language' => 'English',
+            'direction' => 'ltr'
+        ],
+        [
+            'title' => 'Arabic',
+            'lang' => 'ar',
+            'language' => 'العربية',
+            'direction' => 'rtl'
+        ]
+    ]);
+}

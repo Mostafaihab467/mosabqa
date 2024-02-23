@@ -121,6 +121,19 @@
                 </a>
                 <!--end:Menu link-->
             </div>
+
+            <!--Translations-->
+            <div class="menu-item">
+                <!--begin:Menu link-->
+                <a class="menu-link @if(str_contains($currentRouteName, 'translation')){{'active'}}@endif"
+                   href="{{route('translations.index')}}">
+                    <span class="menu-icon">
+                        <i class="fa fa-list"></i>
+                    </span>
+                    <span class="menu-title">{{__('admin.Translations')}}</span>
+                </a>
+                <!--end:Menu link-->
+            </div>
             <!--end:Menu item-->
         </div>
         <!--end::Menu-->
