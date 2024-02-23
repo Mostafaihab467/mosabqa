@@ -71,4 +71,6 @@
 "User not found" => "User not found",
 "Item deleted successfully" => "Item deleted successfully",
 "Record not found" => "Record not found",
+"Multi Categories" => "Multi Categories",
+"Translate all" => "Translate all",
 ];

@@ -23,7 +23,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <a href="javascript:" data-repeater-delete
+                                <a href="javascript:;" data-repeater-delete
                                    class="btn btn-sm btn-light-danger mt-3 mt-md-8">
                                     <i class="fa fa-trash fs-5"></i>
                                     {{__('admin.Delete' )}}

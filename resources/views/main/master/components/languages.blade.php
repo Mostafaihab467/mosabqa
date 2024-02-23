@@ -22,7 +22,7 @@
         data-kt-menu="true">
         <!--begin::Menu item-->
         <div class="menu-item px-3">
-            <a href="#" class="menu-link d-flex px-5 active">
+            <a rel="alternate" hreflang="{{ 'en' }}" href="{{ LaravelLocalization::getLocalizedURL('en', null, [], true) }}" class="menu-link d-flex px-5 {{app()->getLocale() == 'en' ? 'active' : ''}}">
                 <span class="symbol symbol-20px me-4">
                     <img class="rounded-1"
                          src="{{asset('assets/media/flags/united-states.svg')}}"
@@ -33,7 +33,7 @@
         <!--end::Menu item-->
         <!--begin::Menu item-->
         <div class="menu-item px-3">
-            <a href="#" class="menu-link d-flex px-5">
+            <a rel="alternate" hreflang="{{ 'ar' }}" href="{{ LaravelLocalization::getLocalizedURL('ar', null, [], true) }}" class="menu-link d-flex px-5 {{app()->getLocale() == 'ar' ? 'active' : ''}}">
                 <span class="symbol symbol-20px me-4">
                     <img class="rounded-1"
                          src="{{asset('assets/media/flags/egypt.svg')}}"

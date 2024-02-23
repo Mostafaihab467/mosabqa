@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\RecordState;
 use App\Models\Category;
 use App\Models\Question;
+use App\Models\QuestionCategory;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -33,9 +34,11 @@ class QuestionController extends Controller
     public function create()
     {
         $categories = Category::where('record_state', RecordState::ACTIVE)->get();
+        $selectedCategories = [];
         $result = [
             'title' => __('admin.Add New') . ' ' . __('Question'),
             'categories' => $categories,
+            'selectedCategories' => $selectedCategories,
         ];
         return view('pages.questions.edit', $result);
     }
@@ -67,6 +70,14 @@ class QuestionController extends Controller
             }
             $answers = $question->answers()->createMany($answers);
             if ($answers) {
+                if (isset($request->question_category)){
+                    foreach ($request->question_category as $category){
+                        QuestionCategory::create([
+                            'question_id' => $question->id,
+                            'category_id' => $category
+                        ]);
+                    }
+                }
                 \DB::commit();
                 return redirect()->route('questions.index')->with('success', __('admin.Item created successfully'));
             }
@@ -89,9 +100,11 @@ class QuestionController extends Controller
     public function edit($id, Request $request)
     {
         $data = Question::with(['category', 'answers'])->findOrFail($id);
+        $selectedCategories = QuestionCategory::where('question_id', $id)->pluck('category_id')->toArray();
         $result = [
             'selectedItem' => $data,
             'categories' => Category::where('record_state', RecordState::ACTIVE)->get(),
+            'selectedCategories' => $selectedCategories,
             'title' => __('admin.Edit') . ' ' . __('admin.Question'),
         ];
         return view('pages.questions.edit', $result);
@@ -130,6 +143,15 @@ class QuestionController extends Controller
             }
             $answers = $question->answers()->createMany($answers);
             if ($answers) {
+                if (isset($request->question_category)){
+                    QuestionCategory::where('question_id', $id)->delete();
+                    foreach ($request->question_category as $category){
+                        QuestionCategory::create([
+                            'question_id' => $id,
+                            'category_id' => $category
+                        ]);
+                    }
+                }
                 \DB::commit();
                 return redirect()->route('questions.index')->with('success', __('admin.Item updated successfully'));
             }

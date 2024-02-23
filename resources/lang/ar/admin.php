@@ -71,4 +71,6 @@
 "User not found" => "لم يتم العثور على المستخدم",
 "Item deleted successfully" => "تم حذف العنصر بنجاح",
 "Record not found" => "لم يتم العثور على السجل",
+"Multi Categories" => "فئات متعددة",
+"Translate all" => "ترجمة الكل",
 ];

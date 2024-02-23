@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{app()->getLocale()}}" dir="{{app()->getLocale()=='ar' ? 'rtl' : 'ltr'}}"
+      direction="{{app()->getLocale()=='ar' ? 'rtl' : 'ltr'}}"
+      style="direction: {{app()->getLocale()=='ar' ? 'rtl' : 'ltr'}}">
 <!--begin::Head-->
 <head>
     <title>Login</title>
@@ -8,10 +10,17 @@
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700"/>
     <!--end::Fonts-->
-    <!--begin::Global Stylesheets Bundle(used by all pages)-->
-    <link href="{{asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css"/>
-    <link href="{{asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css"/>
-    <!--end::Global Stylesheets Bundle-->
+    @if(app()->getLocale() == 'ar')
+        <!--begin::Global Stylesheets Bundle(used by all pages)-->
+        <link href="{{asset('assets/plugins/global/plugins.bundle.rtl.css')}}" rel="stylesheet" type="text/css"/>
+        <link href="{{asset('assets/css/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css"/>
+        <!--end::Global Stylesheets Bundle-->
+    @else
+        <!--begin::Global Stylesheets Bundle(used by all pages)-->
+        <link href="{{asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css"/>
+        <link href="{{asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css"/>
+        <!--end::Global Stylesheets Bundle-->
+    @endif
 </head>
 <!--end::Head-->
 <!--begin::Body-->

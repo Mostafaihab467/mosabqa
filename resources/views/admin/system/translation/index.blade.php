@@ -27,6 +27,9 @@
                 </div>
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
                     <div class="d-flex ">
+                        <a href="{{route('translate-all')}}" class="btn btn-label-brand btn-bold">
+                            <i class="fa fa-language"></i> {{__("admin.Translate all")}}
+                        </a>
                         <a href="{{route('translations.scan')}}" class="btn btn-label-brand btn-bold">
                             <em class="fas fa-search"></em> {{__("admin.system.translations.Scan translations")}}
                         </a>

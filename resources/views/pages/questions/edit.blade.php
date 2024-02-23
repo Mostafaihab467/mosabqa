@@ -31,6 +31,21 @@
                                     <div class="invalid-feedback">{{$message}}</div>
                                     @enderror
                                 </div>
+                                <div class="mb-5 col-md-6">
+                                    <label for="question_category_id" class="form-label">{{__('admin.Multi Categories')}}</label>
+                                    <select class="form-select form-select-solid" data-control="select2"
+                                            data-placeholder="{{__('admin.Select Category')}}" data-allow-clear="true" multiple="multiple" name="question_category[]"
+                                            id="question_category_id" required>
+                                        <option value=""></option>
+                                        @foreach($categories as $category)
+                                            <option value="{{$category->id}}"
+                                                    @if(in_array($category->id, $selectedCategories)) selected @endif>{{$category->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('question_category_id')
+                                    <div class="invalid-feedback">{{$message}}</div>
+                                    @enderror
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="mb-5 col-md-6">

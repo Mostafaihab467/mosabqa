@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{app()->getLocale()}}" dir="{{app()->getLocale()=='ar' ? 'rtl' : 'ltr'}}"
+      direction="{{app()->getLocale()=='ar' ? 'rtl' : 'ltr'}}"
+      style="direction: {{app()->getLocale()=='ar' ? 'rtl' : 'ltr'}}">
 <!--begin::Head-->
 <head>
     <title></title>
@@ -9,12 +11,21 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700"/>
     <!--end::Fonts-->
     <!--begin::Vendor Stylesheets(used by this page)-->
-    <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet"
+          type="text/css"/>
     <!--end::Vendor Stylesheets-->
-    <!--begin::Global Stylesheets Bundle(used by all pages)-->
-    <link href="{{asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css"/>
-    <link href="{{asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css"/>
-    <!--end::Global Stylesheets Bundle-->
+
+    @if(app()->getLocale() == 'ar')
+        <!--begin::Global Stylesheets Bundle(used by all pages)-->
+        <link href="{{asset('assets/plugins/global/plugins.bundle.rtl.css')}}" rel="stylesheet" type="text/css"/>
+        <link href="{{asset('assets/css/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css"/>
+        <!--end::Global Stylesheets Bundle-->
+    @else
+        <!--begin::Global Stylesheets Bundle(used by all pages)-->
+        <link href="{{asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css"/>
+        <link href="{{asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css"/>
+        <!--end::Global Stylesheets Bundle-->
+    @endif
 
     @yield('pageScriptHead')
 
@@ -69,20 +80,20 @@
 <!--end::Custom Javascript-->
 <!--end::Javascript-->
 <script type="text/javascript">
-    function ajaxSubmit($url,$div,$type="POST",$V=null) {
+    function ajaxSubmit($url, $div, $type = "POST", $V = null) {
 
-        document.getElementById($div).innerHTML="<div class='d-flex justify-content-center'><div class='spinner-border'><span class='sr-only'>Loading...</span></div></div>";
+        document.getElementById($div).innerHTML = "<div class='d-flex justify-content-center'><div class='spinner-border'><span class='sr-only'>Loading...</span></div></div>";
 
         $.ajax({
             type: $type,
             url: $url,
-            success: function(data) {
+            success: function (data) {
                 document.getElementById($div).style.display = "block";
 
-                if($V==1) {
-                    document.getElementById($div).value= data;
+                if ($V == 1) {
+                    document.getElementById($div).value = data;
                 } else {
-                    document.getElementById($div).innerHTML= data;
+                    document.getElementById($div).innerHTML = data;
                 }
             },
             error: function (data, textStatus, errorThrown) {
@@ -94,7 +105,7 @@
         });
     }
 
-    function ajaxFormSubmit($url,$type="POST",$formData=null) {
+    function ajaxFormSubmit($url, $type = "POST", $formData = null) {
 
         $.ajax({
             url: $url,
