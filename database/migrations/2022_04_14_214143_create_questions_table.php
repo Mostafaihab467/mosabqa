@@ -17,9 +17,10 @@ class CreateQuestionsTable extends Migration
             $table->id();
             $table->text('question');
             $table->string('name')->nullable();
-            $table->string('type')->nullable();
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->text('answer')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

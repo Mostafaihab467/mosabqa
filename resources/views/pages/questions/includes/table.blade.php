@@ -13,7 +13,7 @@
         </thead>
         <tbody>
         @foreach($data as $item)
-            <tr>
+            <tr id="question_{{$item->id}}">
                 <td>{{$item->id}}</td>
                 <td>{{$item->question}}</td>
                 <td>{{$item->name}}</td>
@@ -29,14 +29,14 @@
                         @endforeach
                     </ul>
                 <td>
-                    <a href="{{route('categories.edit', $item->id)}}"
+                    <a href="{{route('questions.edit', $item->id)}}"
                        class="btn btn-icon btn-success btn-sm me-1">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <a href="{{route('categories.destroy', $item->id)}}"
+                    <button onclick="deleteItem(this,'{{$item->id}}')"
                        class="btn btn-icon btn-danger btn-sm me-1">
                         <i class="fas fa-trash"></i>
-                    </a>
+                    </button>
             </tr>
         @endforeach
         </tbody>

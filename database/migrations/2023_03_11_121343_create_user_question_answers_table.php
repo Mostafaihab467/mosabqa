@@ -20,6 +20,7 @@ class CreateUserQuestionAnswersTable extends Migration
             $table->foreignId('answer_id')->nullable()->constrained()->onDelete('cascade');
             $table->boolean('is_correct')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

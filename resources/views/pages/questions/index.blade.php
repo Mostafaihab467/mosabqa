@@ -39,4 +39,53 @@
             });
         });
     </script>
+
+    <script>
+        function deleteItem(elem, id) {
+            elem.addEventListener('click', e =>{
+                e.preventDefault();
+
+                Swal.fire({
+                    html: `{{__('admin.Are you sure you want to delete this item?')}}`,
+                    icon: "warning",
+                    buttonsStyling: false,
+                    showCancelButton: true,
+                    confirmButtonText: "{{__('admin.Yes, delete it')}}",
+                    cancelButtonText: '{{__('admin.No, cancel')}}',
+                    customClass: {
+                        confirmButton: "btn btn-primary",
+                        cancelButton: 'btn btn-danger'
+                    },
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "{{route('questions.destroy', '')}}/" + id,
+                            type: 'DELETE',
+                            data: {
+                                _token: "{{csrf_token()}}"
+                            },
+                            success: function (data) {
+                                if (data.success) {
+                                    $('#question_' + id).remove();
+                                    Swal.fire({
+                                        icon: "success",
+                                        text: data.message,
+                                        showConfirmButton: false,
+                                        timer: 1500,
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        icon: "error",
+                                        text: data.message,
+                                        showConfirmButton: false,
+                                        timer: 1500,
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        }
+    </script>
 @endsection
