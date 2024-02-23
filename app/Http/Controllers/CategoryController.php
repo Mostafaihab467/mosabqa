@@ -16,10 +16,10 @@ class CategoryController extends Controller
         $data = Category::all();
         $result = [
             'data' => $data,
-            'title' => __('Categories'),
+            'title' => __('admin.Categories'),
             'addUrl' => [
                 'url' => route('categories.create'),
-                'text' => __('Add')
+                'text' => __('admin.Add')
             ]
         ];
         return view('pages.categories.index', $result);
