@@ -13,7 +13,7 @@
                     <!--begin::Heading-->
                     <div class="text-center mb-11">
                         <!--begin::Title-->
-                        <h1 class="text-dark fw-bolder mb-3">{{__('admin.Sign Up')}}</h1>
+                        <h1 class="text-dark fw-bolder mb-3">{{__('admin.Sign up')}}</h1>
                         <!--end::Title-->
                     </div>
                     <!--begin::Heading-->
@@ -51,7 +51,7 @@
                     <div class="d-grid mb-10">
                         <button type="submit" id="sign_up_submit" class="btn btn-primary disabled">
                             <!--begin::Indicator label-->
-                            <span class="indicator-label">{{__('admin.Sign Up')}}</span>
+                            <span class="indicator-label">{{__('admin.Sign up')}}</span>
                             <!--end::Indicator label-->
                             <!--begin::Indicator progress-->
                             <span class="indicator-progress">

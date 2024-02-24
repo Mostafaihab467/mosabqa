@@ -11,6 +11,13 @@ use Validator;
 
 class QuestionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:question-edit')->only(['edit', 'update']);
+        $this->middleware('permission:question-create')->only(['create', 'store']);
+        $this->middleware('permission:question-delete')->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      */

@@ -81,6 +81,14 @@
                                         timer: 1500,
                                     });
                                 }
+                            },
+                            error: function (data) {
+                                Swal.fire({
+                                    icon: "error",
+                                    text: data.responseJSON.message,
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                });
                             }
                         });
                     }

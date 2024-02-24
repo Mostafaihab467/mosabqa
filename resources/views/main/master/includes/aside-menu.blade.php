@@ -4,9 +4,13 @@
          data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto"
          data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer"
          data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px">
+        @php
+            $currentRouteName = request()->route()->getName();
+        @endphp
         <!--begin::Menu-->
         <div class="menu menu-column menu-rounded menu-sub-indention fw-semibold px-3"
              id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
+            @role('super-admin|admin')
             <!--begin:Menu item-->
             <div class="menu-item pt-5">
                 <!--begin:Menu content-->
@@ -15,9 +19,6 @@
                 </div>
                 <!--end:Menu content-->
             </div>
-            @php
-                $currentRouteName = request()->route()->getName();
-            @endphp
             <!--end:Menu item-->
             <!--begin:Menu item-->
             {{--<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
@@ -133,6 +134,32 @@
                     <span class="menu-title">{{__('admin.Translations')}}</span>
                 </a>
                 <!--end:Menu link-->
+            </div>
+            <!--end:Menu item-->
+
+            @role('super-admin')
+            <!--Laratrust-->
+            <div class="menu-item">
+                <!--begin:Menu link-->
+                <a class="menu-link" target="_blank"
+                   href="{{url('/laratrust')}}">
+                    <span class="menu-icon">
+                        <i class="fa fa-list"></i>
+                    </span>
+                    <span class="menu-title">{{__('admin.Roles Permissions')}}</span>
+                </a>
+                <!--end:Menu link-->
+            </div>
+            <!--end:Menu item-->
+            @endrole
+            @endrole
+            <!--begin:Menu item-->
+            <div class="menu-item pt-5">
+                <!--begin:Menu content-->
+                <div class="menu-content">
+                    <span class="menu-heading fw-bold text-uppercase fs-7">{{__('admin.Student')}}</span>
+                </div>
+                <!--end:Menu content-->
             </div>
             <!--end:Menu item-->
         </div>

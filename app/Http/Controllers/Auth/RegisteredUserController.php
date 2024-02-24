@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Laratrust\Models\Role;
 
 class RegisteredUserController extends Controller
 {
@@ -54,6 +55,9 @@ class RegisteredUserController extends Controller
             'gender' => $gender,
             'email_verified_at' => now(),
         ]);
+
+        $studentRole = Role::where('name', 'student')->first();
+        $user->addRole($studentRole);
 
         event(new Registered($user));
 

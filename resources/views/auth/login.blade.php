@@ -48,7 +48,7 @@
                     <!--end::Submit button-->
                     <!--begin::Sign up-->
                     <div class="text-gray-500 text-center fw-semibold fs-6">
-                        {{__('admin.Don\'t have an account')}}
+                        {{__('admin.Dont have an account')}}
                         <a href="{{route('register')}}"
                            class="link-primary">{{__('admin.Sign up')}}</a></div>
                     <!--end::Sign up-->
