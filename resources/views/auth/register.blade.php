@@ -1,14 +1,14 @@
 @extends('main.auth.auth')
 @section('pageContent')
     <div class="d-flex flex-column flex-lg-row-fluid w-lg-50 p-10">
-    @include('general-includes.questions.choose')
         <!--begin::Form-->
-        <div class="d-flex flex-center flex-column flex-lg-row-fluid">
-            <!--begin::Wrapper-->
-            <div class="w-lg-500px p-10">
-                <!--begin::Form-->
-                <form class="form w-100" id="kt_sign_in_form"
-                      action="{{route('register')}}" method="post">
+        <form class="form w-100" id="kt_sign_in_form"
+              action="{{route('register')}}" method="post">
+            @include('general-includes.questions.choose')
+            <!--begin::Form-->
+            <div class="d-flex flex-center flex-column flex-lg-row-fluid">
+                <!--begin::Wrapper-->
+                <div class="w-lg-500px p-10">
                     @csrf
                     <!--begin::Heading-->
                     <div class="text-center mb-11">
@@ -24,7 +24,8 @@
                             <label for="name">
                                 {{__('admin.Name')}}
                             </label>
-                            <input type="text" placeholder="{{__('admin.Name')}}" name="name" id="name" autocomplete="off"
+                            <input type="text" placeholder="{{__('admin.Name')}}" name="name" id="name"
+                                   autocomplete="off"
                                    class="form-control bg-transparent @error('name') is-invalid @enderror" required
                                    value="{{old('name')}}"
                             />
@@ -67,11 +68,11 @@
                         <a href="{{route('login')}}"
                            class="link-primary">{{__('admin.Sign In')}}</a></div>
                     <!--end::Sign up-->
-                </form>
-                <!--end::Form-->
+                </div>
+                <!--end::Wrapper-->
             </div>
-            <!--end::Wrapper-->
-        </div>
+        </form>
+        <!--end::Form-->
         <!--end::Form-->
         <!--begin::Footer-->
         <div class="d-flex flex-center flex-wrap px-5">
@@ -91,7 +92,7 @@
 @section('pageScripts')
     <script>
         const selectInput = document.getElementById('qType');
-        selectInput.addEventListener('invalid', function() {
+        selectInput.addEventListener('invalid', function () {
             if (selectInput.validity.valueMissing) {
                 selectInput.setCustomValidity('من فضلك اختر المستوى');
             } else {
@@ -117,10 +118,31 @@
     </script>
 
     <script>
+        // global variable to store the no of questions
+        let noOfQs = 0;
+        function getNoOfQs(type) {
+            // ajax call to get no of questions
+            $.ajax({
+                url: "{{route('getNoOfQs')}}",
+                type: 'GET',
+                data: {
+                    _token: "{{csrf_token()}}",
+                    category: type
+                },
+                success: function (data) {
+                    noOfQs = data.noOfQs;
+                    $('#totalQs').text(noOfQs);
+                }
+            });
+        }
+
         $('#qType').change(function () {
-            $('#count').html(0);
             let type = $(this).val();
-            if(type == ''){
+
+            getNoOfQs(type);
+
+            $('#count').html(0);
+            if (type == '') {
                 $('#sign_up_submit').addClass('disabled pointer-event-none');
                 $('#count').html(0);
                 $('#randomChoose').addClass('disabled pointer-event-none');
@@ -166,14 +188,14 @@
                             <input onchange="check(this)" class="form-check-input" type="checkbox" value="" id="card${i}" name="cards[]"/>
                             <label class="form-check-label" for="card${i}">
                                 {{__('admin.Choose')}}
-                            </label>
-                        </div>
-                        <label for="card{i}" class="mt-3">
-                            <div class="card-body">
-                            </div>
-                        </label>
-                    </div>
-                    `);
+                </label>
+            </div>
+            <label for="card{i}" class="mt-3">
+                <div class="card-body">
+                </div>
+            </label>
+        </div>
+`);
             }
         });
 
@@ -193,36 +215,34 @@
 
         function changeCheckbox() {
             let n = $("input:checked").length;
-            if (n > 15) {
-                toastr.error("لا يمكنك اختيار اكثر من 15");
+            if (n > noOfQs) {
+                toastr.error("لا يمكنك اختيار اكثر من " + noOfQs + " سؤال");
                 $(this).prop('checked', false);
                 return false;
             }
             $('#count').html(n);
-            toastr.info("لقد اخترت " + n + " من 15");
-            if (n == 15 && $('#qType').val() != ''){
+            toastr.info("لقد اخترت " + n + " من " + noOfQs + " سؤال");
+            if (n == noOfQs && $('#qType').val() != '') {
                 $('#sign_up_submit').removeClass('disabled pointer-event-none');
             } else {
                 $('#sign_up_submit').addClass('disabled pointer-event-none');
             }
             return true;
         }
-    </script>
-    <script>
         function checkRandom() {
             // let all checkboxes not checked
             $('input[type="checkbox"]').prop('checked', false);
 
             // check 15 random checkboxes
             let n = 0;
-            while (n < 15) {
+            while (n < noOfQs) {
                 let random = Math.floor(Math.random() * 30);
                 if (!$(`#card${random}`).prop('checked')) {
                     $(`#card${random}`).prop('checked', true);
                     n++;
                 }
             }
-            $('#count').html(15);
+            $('#count').html(noOfQs);
         }
     </script>
 @endsection

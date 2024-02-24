@@ -3,7 +3,7 @@
     <!--begin::Form group-->
     <div class="form-group">
         <div data-repeater-list="answers">
-            @if(isset($selectedItem))
+            @if(isset($selectedItem) && $selectedItem->answers->count() > 0)
                 @foreach($selectedItem->answers as $answer)
                     <div class="mb-5" data-repeater-item>
                         <div class="form-group row">

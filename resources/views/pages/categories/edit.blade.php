@@ -15,24 +15,29 @@
                             @if(isset($selectedItem))
                                 @method('put')
                             @endif
-                                <div class="mb-5 col-md-6">
-                                    <label for="name" class="form-label">{{__('admin.name')}}</label>
-                                    <input type="text" class="form-control @error('name'){{'is-invalid'}}@enderror"
-                                           id="name" name="name"
-                                           value="{{old('name', @$selectedItem->name)}}">
-                                    @error('name')
-                                    <div class="invalid-feedback">{{$message}}</div>
-                                    @enderror
-                                </div>
-                                <div class="mb-5 col-md-6">
-                                    <div class="form-check form-switch form-check-custom form-check-solid">
-                                        <input class="form-check-input" type="checkbox" name="record_state" value="1"
-                                               id="flexSwitchChecked" @if(@$selectedItem->record_state)checked="checked"@endif/>
-                                        <label class="form-check-label" for="flexSwitchChecked">
-                                            {{__('admin.Status')}}
-                                        </label>
-                                    </div>
+                            <div class="mb-5 col-md-6">
+                                <label for="name" class="form-label">{{__('admin.name')}}</label>
+                                <input type="text" class="form-control @error('name'){{'is-invalid'}}@enderror"
+                                       id="name" name="name"
+                                       value="{{old('name', @$selectedItem->name)}}">
+                                @error('name')
+                                <div class="invalid-feedback">{{$message}}</div>
+                                @enderror
                             </div>
+                            <div class="mb-5 col-md-6">
+                                <div class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="checkbox" name="record_state" value="1"
+                                           id="flexSwitchChecked"
+                                           @if(@$selectedItem->record_state)checked="checked"@endif/>
+                                    <label class="form-check-label" for="flexSwitchChecked">
+                                        {{__('admin.Status')}}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row mb-5">
+                                @include('pages.categories.includes.repeater')
+                            </div>
+                            <hr>
                             <button type="submit" class="btn btn-primary">{{__('admin.Save')}}</button>
                             <a href="{{route('categories.index')}}" class="btn btn-secondary">{{__('admin.cancel')}}</a>
                         </form>
@@ -42,4 +47,29 @@
         </div>
         <!--end::Content wrapper-->
     </div>
+@endsection
+@section('pageScripts')
+    <script src="{{asset('assets/plugins/custom/formrepeater/formrepeater.bundle.js')}}"></script>
+    <script>
+        $(document).ready(function () {
+            console.log('ready')
+            $('#repeater').repeater({
+                initEmpty: false,
+
+                defaultValues: {
+                    'text-input': 'foo',
+                    'textarea-input': 'bar',
+                },
+
+                show: function () {
+                    $(this).slideDown();
+                },
+
+                hide: function (deleteElement) {
+                    $(this).slideUp(deleteElement);
+                }
+            });
+        });
+    </script>
+
 @endsection

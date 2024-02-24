@@ -13,13 +13,13 @@
                 <div class="col md-6">
                     <div class="form-group">
                         <div class="input-group mb-3">
-                            <select name="type" id="qType" class="form-control" required>
+                            <select name="category_id" id="qType" class="form-control" required>
                                 <option value="">--اختر المستوى--</option>
                                 @foreach(\App\Models\Category::where('record_state', App\Enums\RecordState::ACTIVE->value)->get() as $category)
                                     <option value="{{$category->id}}">{{$category->name}}</option>
                                 @endforeach
                             </select>
-                            @error('type')
+                            @error('category_id')
                             <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                         </span>
@@ -34,7 +34,7 @@
                 </div>
             </div>
             <h3 class="text-center">
-                {{__('admin.You choose')}} <span id="count">0</span> {{__('admin.From')}} 15
+                {{__('admin.You choose')}} <span id="count">0</span> {{__('admin.From')}} <span id="totalQs">15</span>
             </h3>
             <div class="cards row d-none" id="checkBoxCards">
                 @php($countQuestions =  \App\Models\Question::where('category_id', 2)->count())

@@ -32,12 +32,14 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        return $request->all();
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['nullable', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['nullable', Rules\Password::defaults()],
             // nid unique, length 14, numeric
             'nid' => ['required', 'unique:'.User::class, 'digits:14', 'numeric', new ValidNidRule()],
+            'category_id' => 'required|exists:categories,id',
         ]);
 
         // birth_date
@@ -48,6 +50,7 @@ class RegisteredUserController extends Controller
 
         $user = User::create([
             'name' => $request->name,
+            'category_id' => $request->category_id ?? null,
             'email' => $request->email ?? $request->nid.'@'.env('APP_DOMAIN', 'mgahed.com'),
             'password' => $request->password ? Hash::make($request->password) : Hash::make($request->nid),
             'nid' => $request->nid,

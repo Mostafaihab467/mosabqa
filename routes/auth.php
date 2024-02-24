@@ -17,6 +17,12 @@ Route::group([
 ], function () {
 
     Route::middleware('guest')->group(function () {
+        Route::get('no-of-qustions', function () {
+            $category = request()->category;
+            $noOfQs = \DB::table('category_categories')->where('parent', $category)->sum('no_of_questions');
+            return response()->json(['noOfQs' => $noOfQs]);
+        })->name('getNoOfQs');
+
         Route::get('register', [RegisteredUserController::class, 'create'])
             ->name('register');
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\RecordState;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Validator;
@@ -37,7 +38,11 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $result = ['title' => __('admin.Add New') . ' ' . __('Category')];
+        $categories = Category::where('record_state', RecordState::ACTIVE->value)->get();
+        $result = [
+            'title' => __('admin.Add New') . ' ' . __('Category'),
+            'categories' => $categories,
+        ];
         return view('pages.categories.edit', $result);
     }
 
@@ -49,6 +54,9 @@ class CategoryController extends Controller
         // validate the request
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255|unique:categories,name',
+            'repeater' => 'required|array',
+            'repeater.*.child' => 'required|integer',
+            'repeater.*.questionsNo' => 'required|integer',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->with('error', __('admin.Failed to create item'))->withErrors($validator)->withInput();
@@ -60,6 +68,13 @@ class CategoryController extends Controller
             'record_state' => $request->record_state ?? '0',
         ]);
         if ($category) {
+            foreach ($request->repeater as $item) {
+                \DB::table('category_categories')->insert([
+                    'parent' => $category->id,
+                    'child' => $item['child'],
+                    'no_of_questions' => $item['questionsNo'],
+                ]);
+            }
             return redirect()->route('categories.index')->with('success', __('admin.Item created successfully'));
         }
         return redirect()->back()->with('error', __('admin.Failed to create item'))->withInput();
@@ -79,9 +94,13 @@ class CategoryController extends Controller
     public function edit($id, Request $request)
     {
         $data = Category::find($id);
+        $selectedCategories = \DB::table('category_categories')->where('parent', $id)->get();
+        $categories = Category::where('record_state', RecordState::ACTIVE->value)->get();
         $result = [
             'selectedItem' => $data,
             'title' => __('admin.Edit') . ' ' . $data->name,
+            'categories' => $categories,
+            'selectedCategories' => $selectedCategories,
         ];
         return view('pages.categories.edit', $result);
     }
@@ -94,18 +113,28 @@ class CategoryController extends Controller
         // validate the request
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255|unique:categories,name,' . $id,
+            'repeater' => 'nullable|array',
+            'repeater.*.child' => 'required|integer',
+            'repeater.*.questionsNo' => 'required|integer',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->with('error', __('admin.Failed to update item'))->withErrors($validator)->withInput();
         }
 
-//        return $request->all();
         // update the category
         $category = Category::find($id)->update([
             'name' => $request->name,
             'record_state' => $request->record_state ?? '0',
         ]);
         if ($category) {
+            \DB::table('category_categories')->where('parent', $id)->delete();
+            foreach ($request->repeater as $item) {
+                \DB::table('category_categories')->insert([
+                    'parent' => $id,
+                    'child' => $item['child'],
+                    'no_of_questions' => $item['questionsNo'],
+                ]);
+            }
             return redirect()->route('categories.index')->with('success', __('admin.Item updated successfully'));
         }
         return redirect()->back()->with('error', __('admin.Failed to update item'))->withInput();
