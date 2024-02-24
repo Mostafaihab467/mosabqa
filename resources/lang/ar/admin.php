@@ -75,4 +75,6 @@
 "Translate all" => "ترجمة الكل",
 "Is Correct" => "صحيح",
 "Delete" => "يمسح",
+"Active" => "نشيط",
+"Not Active" => "غير فعال",
 ];

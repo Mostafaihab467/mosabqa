@@ -75,4 +75,6 @@
 "Translate all" => "Translate all",
 "Is Correct" => "Is Correct",
 "Delete" => "Delete",
+"Active" => "Active",
+"Not Active" => "Not Active",
 ];

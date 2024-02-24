@@ -4,7 +4,7 @@
         <thead>
         <tr class="fw-semibold fs-6 text-gray-800">
             <th>{{__('#')}}</th>
-            <th>{{__('admin.name')}}</th>
+            <th>{{__('admin.Name')}}</th>
             <th>{{__('admin.Record state')}}</th>
             <th>{{__('admin.Actions')}}</th>
         </tr>
@@ -16,9 +16,9 @@
                 <td>{{$item->name}}</td>
                 <td>
                     @if($item->record_state == 1)
-                        <span class="badge badge-light-success">Active</span>
+                        <span class="badge badge-light-success">{{__('admin.Active')}}</span>
                     @else
-                        <span class="badge badge-light-danger">Not Active</span>
+                        <span class="badge badge-light-danger">{{__('admin.Not Active')}}</span>
                     @endif
                 </td>
                 <td>
