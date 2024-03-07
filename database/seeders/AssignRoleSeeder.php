@@ -65,7 +65,22 @@ class AssignRoleSeeder extends Seeder
                 'name' => 'question-create',
                 'display_name' => 'Question Create',
                 'description' => 'Question Create'
-            ]
+            ],
+            [
+                'name' => 'lookup-create',
+                'display_name' => 'Lookup Create',
+                'description' => 'Lookup Create'
+            ],
+            [
+                'name' => 'lookup-edit',
+                'display_name' => 'Lookup Edit',
+                'description' => 'Lookup Edit'
+            ],
+            [
+                'name' => 'lookup-delete',
+                'display_name' => 'Lookup Delete',
+                'description' => 'Lookup Delete'
+            ],
         ];
 
         foreach ($permission as $value) {

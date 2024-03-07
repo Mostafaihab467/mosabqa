@@ -14,12 +14,12 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('categories')->delete();
-        
+
         \DB::table('categories')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'name' => 'ثلاثة اجزاء',
@@ -28,7 +28,7 @@ class CategoriesTableSeeder extends Seeder
                 'updated_at' => '2024-02-16 14:23:00',
                 'deleted_at' => NULL,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'name' => 'ربع القران',
@@ -37,7 +37,7 @@ class CategoriesTableSeeder extends Seeder
                 'updated_at' => '2024-02-16 14:23:00',
                 'deleted_at' => NULL,
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'name' => 'نصف القران',
@@ -46,7 +46,7 @@ class CategoriesTableSeeder extends Seeder
                 'updated_at' => '2024-02-16 14:23:00',
                 'deleted_at' => NULL,
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'name' => 'ثلاث ارباع القران',
@@ -55,7 +55,7 @@ class CategoriesTableSeeder extends Seeder
                 'updated_at' => '2024-02-16 14:23:00',
                 'deleted_at' => NULL,
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'name' => 'القران كاملا',
@@ -64,7 +64,7 @@ class CategoriesTableSeeder extends Seeder
                 'updated_at' => '2024-02-16 14:23:00',
                 'deleted_at' => NULL,
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
                 'name' => 'اسأله ثقافيه',
@@ -73,7 +73,7 @@ class CategoriesTableSeeder extends Seeder
                 'updated_at' => '2024-02-16 14:23:00',
                 'deleted_at' => NULL,
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 7,
                 'name' => 'testat',
@@ -83,7 +83,7 @@ class CategoriesTableSeeder extends Seeder
                 'deleted_at' => NULL,
             ),
         ));
-        
-        
+
+
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LookupController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\TranslationController;
@@ -42,6 +43,7 @@ Route::group([
         Route::group(['middleware' => ['role:super-admin|admin']], function () {
             Route::resource('categories', CategoryController::class)->names('categories');
             Route::resource('questions', QuestionController::class)->names('questions');
+            Route::resource('lookups', LookupController::class)->names('lookups');
 
 
             Route::group(['prefix' => 'translation', 'namespace' => 'Translation',], function () {

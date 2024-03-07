@@ -123,6 +123,20 @@
                 <!--end:Menu link-->
             </div>
 
+            <!--Lookups-->
+            <div class="menu-item">
+                <!--begin:Menu link-->
+                <a class="menu-link @if(str_contains($currentRouteName, 'lookups')){{'active'}}@endif"
+                   href="{{route('lookups.index')}}">
+                    <span class="menu-icon">
+                        <i class="fa fa-list"></i>
+                    </span>
+                    <span class="menu-title">{{__('admin.Lookups')}}</span>
+                </a>
+                <!--end:Menu link-->
+            </div>
+            <!--end:Menu item-->
+
             <!--Translations-->
             <div class="menu-item">
                 <!--begin:Menu link-->
@@ -163,7 +177,7 @@
             </div>
             <!--end:Menu item-->
 
-            <!--Translations-->
+            <!--Questions-->
             <div class="menu-item">
                 <!--begin:Menu link-->
                 <a class="menu-link @if(request()->routeIs('student.questions')){{'active'}}@endif"

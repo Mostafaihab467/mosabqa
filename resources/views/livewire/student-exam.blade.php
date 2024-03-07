@@ -2,14 +2,14 @@
     <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
         <!--begin::Content wrapper-->
         <div class="d-flex flex-column flex-column-fluid">
-            @if($question)
+            @if($question && $startExam)
                 @include('main.master.includes.toolbar')
             @endif
             <div class="app-container container-fluid">
                 <!--begin::table-->
                 <div class="card">
                     <div class="card-body">
-                        @if($question)
+                        @if($question && $startExam)
                             <form wire:submit="nextQuestion">
                                 <div class="row">
                                     <div class="mb-5 col-md-12">
@@ -48,7 +48,7 @@
                         @else
                             <div class="row">
                                 <div class="mb-5 col-md-12">
-                                    <h1>{{__('admin.You finished your questions')}}</h1>
+                                    <h1>{{$msg}}</h1>
                                 </div>
                             </div>
                         @endif

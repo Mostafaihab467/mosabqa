@@ -280,6 +280,7 @@ class TranslationController extends Controller
         $this->findTranslation(app_path('Rules'));
         $this->findTranslation(app_path('Jobs'));
         $this->findTranslation(app_path('Helpers'));
+        $this->findTranslation(app_path('Livewire'));
 
         $data = Translation::whereNotNull('full_path')->get();
         $sites = sites();
