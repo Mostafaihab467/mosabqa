@@ -9,6 +9,6 @@ Route::group([
 ], function () {
 
     Route::group(['prefix' => 'student', 'middleware' => ['auth']], function () {
-        Route::get('/questions', [StudentController::class, 'questions'])->name('student.questions');
+        Route::get('/exam-questions', [StudentController::class, 'examQuestions'])->name('student.questions');
     });
 });

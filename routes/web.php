@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\TranslationController;
 use Illuminate\Support\Facades\Route;
+use Livewire\Livewire;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
@@ -22,6 +23,9 @@ Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
 ], function () {
+    Livewire::setUpdateRoute(function ($handle) {
+        return Route::post('/livewire/update', $handle);
+    });
     Route::get('/', function () {
         return view('welcome');
     });
@@ -63,3 +67,4 @@ Route::group([
     Route::post('/data-by-nid', [ProfileController::class, 'dataByNid'])->name('auth.get-user-by-nid');
 });
 require __DIR__ . '/auth.php';
+require __DIR__ . '/student.php';

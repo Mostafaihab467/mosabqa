@@ -20,6 +20,13 @@
                         {{$addUrl['text']}} <i class="fas fa-plus"></i>
                     </a>
                 @endif
+                @if(isset($timer))
+                    <span class="badge badge-light-primary">
+                    <h2 class="text-end mb-0 p-3">
+                        <span id="timer">{{$timer}}</span>
+                    </h2>
+                    </span>
+                @endif
             </div>
         </div>
         <!--end::Actions-->

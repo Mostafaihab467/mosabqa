@@ -27,6 +27,7 @@ class User extends Authenticatable implements LaratrustUser
         'gender',
         'birth_date',
         'password',
+        'category_id',
     ];
 
     /**
