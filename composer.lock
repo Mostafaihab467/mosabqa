@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c389dfc5cd8ee7c0661cb3c64e17c120",
+    "content-hash": "4fa896c4af407422c5e107771807c25b",
     "packages": [
         {
             "name": "brick/math",
@@ -7540,16 +7540,16 @@
         },
         {
             "name": "laravel/sail",
-            "version": "v1.27.3",
+            "version": "v1.28.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "7e01b345072c9604ead9d7aed175bf7ac1d80289"
+                "reference": "057777403b8ab79222dcc04983beaab10b6de6a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/7e01b345072c9604ead9d7aed175bf7ac1d80289",
-                "reference": "7e01b345072c9604ead9d7aed175bf7ac1d80289",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/057777403b8ab79222dcc04983beaab10b6de6a0",
+                "reference": "057777403b8ab79222dcc04983beaab10b6de6a0",
                 "shasum": ""
             },
             "require": {
@@ -7568,9 +7568,6 @@
             ],
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "1.x-dev"
-                },
                 "laravel": {
                     "providers": [
                         "Laravel\\Sail\\SailServiceProvider"
@@ -7601,7 +7598,7 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
-            "time": "2024-01-30T03:03:59+00:00"
+            "time": "2024-03-04T14:58:29+00:00"
         },
         {
             "name": "mockery/mockery",
