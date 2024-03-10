@@ -90,4 +90,5 @@
 "Exam finished" => "Exam finished",
 "You dont have any question" => "You dont have any question",
 "Login title" => "مسابقه القران لجمعية تنمية المجتمع المحلي",
+"Please wait" => "Please wait",
 ];
