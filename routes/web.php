@@ -28,7 +28,11 @@ Route::group([
         return Route::post('/livewire/update', $handle);
     });
     Route::get('/', function () {
-        return view('welcome');
+        if (auth()->check()) {
+            return redirect()->route('dashboard');
+        } else {
+            return redirect()->route('login');
+        }
     });
 
     Route::get('/dashboard', function () {
