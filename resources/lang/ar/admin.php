@@ -29,7 +29,7 @@
 "Translations" => "ترجمات",
 "Translate all" => "ترجمة الكل",
 "Sign In" => "تسجيل الدخول",
-"Nid" => "لا",
+"Nid" => "الرقم القومي",
 "Please wait" => "انتظر من فضلك",
 "Dont have an account" => "ليس لديك حساب",
 "Sign up" => "اشتراك",
@@ -89,4 +89,5 @@
 "Exam not started yet" => "الامتحان لم يبدأ بعد",
 "Exam finished" => "انتهى الامتحان",
 "You dont have any question" => "ليس لديك أي سؤال",
+"Login title" => "مسابقه القران لجمعية تنمية المجتمع المحلي",
 ];

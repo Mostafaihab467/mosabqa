@@ -62,9 +62,16 @@
         <div class="d-flex flex-center flex-wrap px-5">
             <!--begin::Links-->
             <div class="d-flex fw-semibold text-primary fs-base">
-                <a href="#" class="px-5" target="_blank">FaceBook</a>
-                <a href="tel:+201067554823"
-                   class="px-5" target="_blank">Contact Us</a>
+                <a href="tel:+201067554823" class="px-5" target="_blank">
+                    <i class="fa-solid fa-phone" style="color: #3297FF;"></i>
+                </a>
+                <a href="https://keenthemes.com" class="px-5" target="_blank">
+                    <i class="fa-brands fa-facebook-f" style="color: #3297FF;"></i>
+                </a>
+                <a href="https://mgahed.com/"
+                   class="px-5" target="_blank">
+                    <i class="fa-solid fa-m" style="color: #3297FF;"></i>
+                </a>
             </div>
             <!--end::Links-->
         </div>
