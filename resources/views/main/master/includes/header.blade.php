@@ -24,8 +24,8 @@
         <!--begin::Mobile logo-->
         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
             <a href="/" class="d-lg-none">
-                <img alt="Logo" src="{{asset('assets/media/logos/default-small.svg')}}" class="theme-light-show h-30px"/>
-                <img alt="Logo" src="{{asset('assets/media/logos/default-small-dark.svg')}}" class="theme-dark-show h-30px"/>
+                <img alt="Logo" src="{{asset('logo.png')}}" class="theme-light-show w-75"/>
+                <img alt="Logo" src="{{asset('logo.png')}}" class="theme-dark-show w-75"/>
             </a>
         </div>
         <!--end::Mobile logo-->

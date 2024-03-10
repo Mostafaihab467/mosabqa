@@ -4,7 +4,7 @@
     <div class="d-flex flex-column flex-center p-6 p-lg-10 w-100">
         <!--begin::Logo-->
         <a href="/" class="mb-0 mb-lg-20">
-            <img alt="Logo" src="{{asset('assets/media/logos/default-white.svg')}}" class="h-40px h-lg-50px"/>
+            <img alt="Logo" src="{{asset('logo.png')}}" class="w-100"/>
         </a>
         <!--end::Logo-->
        {{-- <!--begin::Image-->

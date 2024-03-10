@@ -7,7 +7,7 @@
     <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
         <!--begin::Logo image-->
         <a href="/">
-            <img alt="Logo" src="{{asset('assets/media/logos/default-dark.svg')}}" class="h-30px app-sidebar-logo-default"/>
+            <img alt="Logo" src="{{asset('logo.png')}}" class="w-100 app-sidebar-logo-default"/>
         </a>
         <!--end::Logo image-->
         <!--begin::Sidebar toggle-->
@@ -35,7 +35,7 @@
     @include('main.master.includes.aside-menu')
     <!--end::sidebar menu-->
     <!--begin::Footer-->
-    <div class="app-sidebar-footer flex-column-auto pt-2 pb-6 px-6" id="kt_app_sidebar_footer">
+    {{--<div class="app-sidebar-footer flex-column-auto pt-2 pb-6 px-6" id="kt_app_sidebar_footer">
         <a href="https://preview.keenthemes.com/html/keen/docs"
            class="btn btn-flex flex-center btn-custom btn-primary overflow-hidden text-nowrap px-0 h-40px w-100"
            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click"
@@ -56,7 +56,7 @@
 								</span>
             <!--end::Svg Icon-->
         </a>
-    </div>
+    </div>--}}
     <!--end::Footer-->
 </div>
 <!--end::sidebar-->
