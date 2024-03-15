@@ -19,6 +19,10 @@ class LookupsSeeder extends Seeder
                 'value' => '10',
             ],
             [
+                'name' => 'success_percentage',
+                'value' => '50',
+            ],
+            [
                 'name' => 'exam_start_date',
                 'value' => '2024-04-20 00:00:00',
             ],

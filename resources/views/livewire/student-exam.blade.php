@@ -13,7 +13,7 @@
                             <form wire:submit="nextQuestion">
                                 <div class="row">
                                     <div class="mb-5 col-md-12">
-                                        <h1>{{@$question->question}}</h1>
+                                        <h1 dir="rtl">{{@$question->question}}</h1>
                                         <input type="hidden" name="question_id" value="{{$question->id}}"
                                                wire:model="question_id"/>
                                     </div>
@@ -21,10 +21,10 @@
                                     @foreach($question->answers as $answer)
                                         <div class="mb-5 col-md-12">
                                             <div class="form-check form-check-custom form-check-solid">
-                                                <input class="form-check-input" type="radio" name="answer_id"
+                                                <input dir="rtl" class="form-check-input" type="radio" name="answer_id"
                                                        wire:model="answer_id"
                                                        value="{{$answer->id}}" id="answer{{$answer->id}}"/>
-                                                <label class="form-check-label fs-1" for="answer{{$answer->id}}">
+                                                <label dir="rtl" class="form-check-label fs-1" for="answer{{$answer->id}}">
                                                     {{$answer->answer}}
                                                 </label>
                                             </div>
@@ -48,7 +48,7 @@
                         @else
                             <div class="row">
                                 <div class="mb-5 col-md-12">
-                                    <h1>{{$msg}}</h1>
+                                    <h1>{!!$msg!!}</h1>
                                 </div>
                             </div>
                         @endif

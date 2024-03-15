@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\admin\UserController;
+use App\Models\Lookup;
 use App\Models\Question;
 use App\Models\QuestionCategory;
 use Illuminate\Http\Request;
@@ -64,5 +66,13 @@ class StudentController extends Controller
             }
         }
         return view('pages.student.exam-questions');
+    }
+
+    public function userAnswers(Request $request)
+    {
+        if (now() >= Lookup::where('name', 'exam_end_date')->first()->value) {
+        return (new UserController())->show(Auth::id());
+        }
+        abort(403, __('Unauthorized action.'));
     }
 }

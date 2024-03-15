@@ -1,0 +1,43 @@
+@php
+    $successPercentage = \App\Models\Lookup::where('name', 'success_percentage')->first()->value;
+@endphp
+<div class="table-responsive">
+    <table id="usersTable"
+           class="table table-striped table-row-bordered gy-5 gs-7 border rounded">
+        <thead>
+        <tr class="fw-semibold fs-6 text-gray-800">
+            <th>{{__('#')}}</th>
+            <th>{{__('admin.Role')}}</th>
+            <th>{{__('admin.Name')}}</th>
+            <th>{{__('admin.Category')}}</th>
+            <th>{{__('admin.Gender')}}</th>
+            <th>{{__('admin.Birth date')}}</th>
+            <th>{{__('admin.Degree')}}</th>
+            <th>{{__('admin.Actions')}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($data as $item)
+            <tr>
+                <td>{{$item->id}}</td>
+                <td>{{$item->role}}</td>
+                <td>{{$item->name}}</td>
+                <td>{{@$item->category->name}}</td>
+                <td>{{@$item->gender}}</td>
+                <td>{{@$item->birth_date}}</td>
+                <td>
+                    <span class="badge badge-light-{{is_numeric($item->degree) && $item->degree >= $successPercentage ? 'success' : 'danger'}}">
+                    {{$item->degree}} %
+                    </span>
+                </td>
+                <td>
+                    <a href="{{route('admin.users.show', $item->id)}}"
+                       class="btn btn-icon btn-primary btn-sm me-1">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                </td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+</div>

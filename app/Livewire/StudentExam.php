@@ -63,23 +63,29 @@ class StudentExam extends Component
 
         $startExam = true;
         if (!$question && $allQuestionCount) {
-            $msg = __('admin.You have finished your questions');
+            $degree = getDgree(auth()->id());
+            if ($degree >= Lookup::where('name', 'success_percentage')->first()->value ?? -1) {
+                $msg = "<span class='text-success'>" . __('admin.Congratulations, you have passed the exam') . "</span>";
+            } else {
+                $msg = "<span class='text-danger'>" . __('admin.Sorry, you have failed the exam') . "</span>";
+            }
+            $msg = __('admin.You have finished your questions') . '</br></br>' . $msg;
             $startExam = false;
-        } else if (!\App\Models\Lookup::where('name', 'exam_start_date')->whereDate('value', '<=', now())->whereTime('value', '<=', now())->first()){
+        } else if(!$question) {
+            $msg = __('admin.You dont have any question');
+            $startExam = false;
+        } else if (!\App\Models\Lookup::where('name', 'exam_start_date')->where('value', '<=', now())->first()){
             $msg = __('admin.Exam not started yet');
             $startExam = false;
-        } else if (!\App\Models\Lookup::where('name', 'exam_end_date')->whereDate('value', '>=', now())->whereTime('value', '>=', now())->first()){
+        } else if (!\App\Models\Lookup::where('name', 'exam_end_date')->where('value', '>=', now())->first()){
             $msg = __('admin.Exam finished');
-            $startExam = false;
-        } else {
-            $msg = __('admin.You dont have any question');
             $startExam = false;
         }
         return view('livewire.student-exam',[
             'question' => $question,
             'title' => __('admin.Question') . ' ' . $this->counter,
             'timer' => $this->timer,
-            'msg' => $msg,
+            'msg' => $msg ?? '-',
             'startExam' => $startExam
         ]);
     }
