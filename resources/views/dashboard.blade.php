@@ -6,15 +6,17 @@
             @include('main.master.includes.toolbar', [
     'title' => __('admin.Dashboard'),
      ])
-            @role('student')
-            <h1>
-                Student
-            </h1>
-            @else
-                <h1>
-                    {{Auth::user()->roles->first()->name}}
-                </h1>
-            @endrole
+            <div class="container-fluid">
+                @role('student')
+                    <h1>
+                        {{__('admin.Your serial number is')}} {{Auth::user()->id}}
+                    </h1>
+                @else
+                    <h1>
+                        {{Auth::user()->roles->first()->name}}
+                    </h1>
+                @endrole
+            </div>
         </div>
         <!--end::Content wrapper-->
     </div>

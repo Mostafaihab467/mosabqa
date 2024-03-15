@@ -123,6 +123,19 @@
                 <!--end:Menu link-->
             </div>
 
+            <!--Users-->
+            <div class="menu-item">
+                <!--begin:Menu link-->
+                <a class="menu-link @if(str_contains($currentRouteName, 'admin.users')){{'active'}}@endif"
+                   href="{{route('admin.users.index')}}">
+                    <span class="menu-icon">
+                        <i class="fa fa-list"></i>
+                    </span>
+                    <span class="menu-title">{{__('admin.Users')}}</span>
+                </a>
+                <!--end:Menu link-->
+            </div>
+
             <!--Lookups-->
             <div class="menu-item">
                 <!--begin:Menu link-->
@@ -188,6 +201,18 @@
                     <span class="menu-title">{{__('admin.Exam')}}</span>
                 </a>
                 <!--end:Menu link-->
+
+                @if(now() >= \App\Models\Lookup::where('name', 'exam_end_date')->first()->value && now())
+                    <!--begin:Menu link-->
+                    <a class="menu-link @if(request()->routeIs('student.answers')){{'active'}}@endif"
+                       href="{{route('student.answers')}}">
+                        <span class="menu-icon">
+                            <i class="fa fa-list"></i>
+                        </span>
+                        <span class="menu-title">{{__('admin.Answers')}}</span>
+                    </a>
+                    <!--end:Menu link-->
+                @endif
             </div>
             <!--end:Menu item-->
         </div>

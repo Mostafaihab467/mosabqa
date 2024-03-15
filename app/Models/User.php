@@ -49,4 +49,14 @@ class User extends Authenticatable implements LaratrustUser
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function userQuestionAnswers()
+    {
+        return $this->hasMany(UserQuestionAnswers::class);
+    }
 }

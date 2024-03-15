@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\Gender;
+use App\Models\UserQuestionAnswers;
 
 function getBirthDate($nid)
 {
@@ -60,4 +61,17 @@ function sites(){
             'direction' => 'rtl'
         ]
     ]);
+}
+
+
+function getDgree($userId){
+    $usersQuestions = UserQuestionAnswers::query()
+        ->where('user_id', $userId);
+    $noUserQuestions = $usersQuestions
+        ->count();
+    $correctAnswers = $usersQuestions
+        ->where('is_correct', 1)
+        ->count();
+
+    return $noUserQuestions == 0 ? '-' : ($correctAnswers / $noUserQuestions) * 100;
 }
