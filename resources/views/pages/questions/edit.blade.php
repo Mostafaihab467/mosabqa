@@ -35,7 +35,7 @@
                                     <label for="question_category_id" class="form-label">{{__('admin.Multi Categories')}}</label>
                                     <select class="form-select form-select-solid" data-control="select2"
                                             data-placeholder="{{__('admin.Select Category')}}" data-allow-clear="true" multiple="multiple" name="question_category[]"
-                                            id="question_category_id" required>
+                                            id="question_category_id">
                                         <option value=""></option>
                                         @foreach($categories as $category)
                                             <option value="{{$category->id}}"
