@@ -15,7 +15,7 @@ class ValidNidRule implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if (strlen($value) !== 14) {
-            $fail("The $attribute must be 10 characters");
+            $fail(__("admin.This must be 10 characters"));
         }
 
         // get birth date from nid
@@ -23,12 +23,12 @@ class ValidNidRule implements ValidationRule
 
         // check if birthdate is valid
         if (!$this->isValidDate($birthDate)) {
-            $fail("The $attribute is not a valid date");
+            $fail(__("admin.This is not a valid date"));
         }
 
         // check if first digit is 1 or 2
         if (!in_array($value[0], ['1', '2', '3'])) {
-            $fail("The $attribute must start with 1 or 2");
+            $fail(__("admin.Must start with 1 or 2 or 3"));
         }
     }
 

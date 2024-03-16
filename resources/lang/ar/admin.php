@@ -105,4 +105,8 @@
 "Congratulations, you have passed the exam" => "تهانينا، لقد اجتزت الامتحان",
 "Sorry, you have failed the exam" => "آسف، لقد فشلت في الامتحان",
 "Your serial number is" => "الرقم التسلسلي الخاص بك هو",
+"This must be 10 characters" => "يجب أن يكون هذا 10 أحرف",
+"This is not a valid date" => "هذا ليس تاريخا صالحا",
+"Must start with 1 or 2" => "يجب أن يبدأ بـ 1 أو 2",
+"Must start with 1 or 2 or 3" => "يجب أن يبدأ بـ 1 أو 2 أو 3",
 ];

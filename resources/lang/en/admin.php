@@ -105,4 +105,8 @@
 "Congratulations, you have passed the exam" => "Congratulations, you have passed the exam",
 "Sorry, you have failed the exam" => "Sorry, you have failed the exam",
 "Your serial number is" => "Your serial number is",
+"This must be 10 characters" => "This must be 10 characters",
+"This is not a valid date" => "This is not a valid date",
+"Must start with 1 or 2" => "Must start with 1 or 2",
+"Must start with 1 or 2 or 3" => "Must start with 1 or 2 or 3",
 ];
