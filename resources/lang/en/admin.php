@@ -109,4 +109,11 @@
 "This is not a valid date" => "This is not a valid date",
 "Must start with 1 or 2" => "Must start with 1 or 2",
 "Must start with 1 or 2 or 3" => "Must start with 1 or 2 or 3",
+"Congratulations! You have passed the test" => "Congratulations! You have passed the test",
+"Your grade is" => "Your grade is",
+"You have not taken the test yet" => "You have not taken the test yet",
+"Start test" => "Start test",
+"You have failed the test" => "You have failed the test",
+"Congratulations, you have passed the exam with grade" => "Congratulations, you have passed the exam with grade",
+"Sorry, you have failed the exam, Your grade is" => "Sorry, you have failed the exam, Your grade is",
 ];

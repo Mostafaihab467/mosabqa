@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\Gender;
+use App\Models\User;
 use App\Models\UserQuestionAnswers;
 
 function getBirthDate($nid)
@@ -65,13 +66,36 @@ function sites(){
 
 
 function getDgree($userId){
+    $user = User::query()
+        ->where('id', $userId)
+        ->first();
     $usersQuestions = UserQuestionAnswers::query()
-        ->where('user_id', $userId);
+        ->where('user_id', $userId)
+        ->where('category_id', $user->category_id);
     $noUserQuestions = $usersQuestions
         ->count();
     $correctAnswers = $usersQuestions
         ->where('is_correct', 1)
         ->count();
 
-    return $noUserQuestions == 0 ? '-' : ($correctAnswers / $noUserQuestions) * 100;
+    if ($noUserQuestions != 0) {
+        $user->grade = round((($correctAnswers / $noUserQuestions) * 100), 2);
+        $user->save();
+    }
+    return $noUserQuestions == 0 ? '-' : round((($correctAnswers / $noUserQuestions) * 100), 2);
+}
+
+function getSerial()
+{
+    // check if user has serial
+    $user = User::query()
+        ->where('id', auth()->id())
+        ->first();
+    if ($user->serial) {
+        return $user->serial;
+    }
+    // get largest serial
+    $serial = User::query()
+        ->max('serial');
+    return $serial + 1;
 }

@@ -65,9 +65,10 @@ class StudentExam extends Component
         if (!$question && $allQuestionCount) {
             $degree = getDgree(auth()->id());
             if ($degree >= Lookup::where('name', 'success_percentage')->first()->value ?? -1) {
-                $msg = "<span class='text-success'>" . __('admin.Congratulations, you have passed the exam') . "</span>";
+                $msg = "<span class='text-success'>" . __('admin.Congratulations, you have passed the exam with grade') . " " . $degree . "%</span>";
+                $msg .= "</br></br>" . __('admin.Your serial number is') . " " . auth()->user()->serial ?? '-';
             } else {
-                $msg = "<span class='text-danger'>" . __('admin.Sorry, you have failed the exam') . "</span>";
+                $msg = "<span class='text-danger'>" . __('admin.Sorry, you have failed the exam, Your grade is') . " " . $degree . "%</span>";
             }
             $msg = __('admin.You have finished your questions') . '</br></br>' . $msg;
             $startExam = false;

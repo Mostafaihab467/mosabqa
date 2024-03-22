@@ -109,4 +109,11 @@
 "This is not a valid date" => "هذا ليس تاريخا صالحا",
 "Must start with 1 or 2" => "يجب أن يبدأ بـ 1 أو 2",
 "Must start with 1 or 2 or 3" => "يجب أن يبدأ بـ 1 أو 2 أو 3",
+"Congratulations! You have passed the test" => "تهانينا! ",
+"Your grade is" => "درجتك هي",
+"You have not taken the test yet" => "أنت لم تأخذ الاختبار بعد",
+"Start test" => "ابدأ الاختبار",
+"You have failed the test" => "لقد فشلت في الاختبار",
+"Congratulations, you have passed the exam with grade" => "تهانينا، لقد اجتزت الامتحان بتقدير",
+"Sorry, you have failed the exam, Your grade is" => "عذرًا، لقد فشلت في الامتحان، درجتك هي",
 ];

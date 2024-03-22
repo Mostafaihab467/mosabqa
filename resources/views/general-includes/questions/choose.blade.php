@@ -15,7 +15,7 @@
                         <div class="input-group mb-3">
                             <select name="category_id" id="qType" class="form-control" required>
                                 <option value="">--اختر المستوى--</option>
-                                @foreach(\App\Models\Category::where('record_state', App\Enums\RecordState::ACTIVE->value)->get() as $category)
+                                @foreach(\App\Models\Category::where('record_state', App\Enums\RecordState::ACTIVE->value)->where('appear', App\Enums\RecordState::ACTIVE->value)->get() as $category)
                                     <option value="{{$category->id}}">{{$category->name}}</option>
                                 @endforeach
                             </select>

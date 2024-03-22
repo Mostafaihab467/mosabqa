@@ -78,6 +78,7 @@
                                     <thead>
                                     <tr class="fw-semibold fs-6 text-gray-800">
                                         <th>{{__('admin.Question')}}</th>
+                                        <th>{{__('admin.Category')}}</th>
                                         <th>{{__('admin.User answer')}}</th>
                                         <th>{{__('admin.Right answer')}}</th>
                                     </tr>
@@ -86,6 +87,7 @@
                                     @foreach($selectedItem->userQuestionAnswers as $item)
                                         <tr>
                                             <td dir="rtl">{{$item->question->question}}</td>
+                                            <td dir="rtl">{{$item->question->name}}</td>
                                             <td dir="rtl" @if(in_array($item->answer_id, $item->question->answers->pluck('id')->toArray())) class="text-success" @else class="text-danger" @endif>
                                                 {{@$item->answer->answer ?? '-'}}
                                             </td>

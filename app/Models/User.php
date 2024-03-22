@@ -28,6 +28,7 @@ class User extends Authenticatable implements LaratrustUser
         'birth_date',
         'password',
         'category_id',
+        'grade',
     ];
 
     /**
@@ -58,5 +59,15 @@ class User extends Authenticatable implements LaratrustUser
     public function userQuestionAnswers()
     {
         return $this->hasMany(UserQuestionAnswers::class);
+    }
+
+    public function getGradeAttribute($value)
+    {
+        return round($value, 2);
+    }
+
+    public function setGradeAttribute($value)
+    {
+        $this->attributes['grade'] = round($value, 2);
     }
 }
