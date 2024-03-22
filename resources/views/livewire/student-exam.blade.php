@@ -24,7 +24,8 @@
                                                 <input dir="rtl" class="form-check-input" type="radio" name="answer_id"
                                                        wire:model="answer_id"
                                                        value="{{$answer->id}}" id="answer{{$answer->id}}"/>
-                                                <label dir="rtl" class="form-check-label fs-1" for="answer{{$answer->id}}">
+                                                <label dir="rtl" class="form-check-label fs-1"
+                                                       for="answer{{$answer->id}}">
                                                     {{$answer->answer}}
                                                 </label>
                                             </div>
@@ -49,6 +50,17 @@
                             <div class="row">
                                 <div class="mb-5 col-md-12">
                                     <h1>{!!$msg!!}</h1>
+                                    @php
+                                        $checkExtraQuestion = \DB::table('user_question_answers')->where('user_id', Auth::id())
+                                        ->where('category_id', \App\Models\Category::where('name', env('EXTRA_CATEGORY'))->first()->id)->first();
+                                    @endphp
+                                    @if(!$checkExtraQuestion)
+                                        <div class="fs-1">
+                                            {{__('admin.Start extra exam')}} {{env('EXTRA_CATEGORY')}}
+                                            <a class="btn btn-primary"
+                                               href="{{route('student.questions', ['category_id' => \App\Models\Category::where('name', env('EXTRA_CATEGORY'))->first()->id])}}">{{__('admin.Start test')}}</a>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         @endif
@@ -62,15 +74,15 @@
     @script
     <script>
         $(document).ready(function () {
-            document.addEventListener('contentChanged', function(e) {
-                for(i=0; i<10000; i++)
-                {
+            document.addEventListener('contentChanged', function (e) {
+                for (i = 0; i < 10000; i++) {
                     window.clearInterval(i);
                 }
                 timerFunction(e.detail)
             });
         });
         timerFunction({{$timer}})
+
         function timerFunction(count) {
             var intervalx = setInterval(function () {
                 count--;
@@ -89,7 +101,7 @@
         }
 
 
-        $(document).on("keydown", function(event) {
+        $(document).on("keydown", function (event) {
             // Check if the pressed key is F5 (keyCode 116) and prevent its default action
             if (event.keyCode === 116) {
                 event.preventDefault();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\admin\UserController;
+use App\Models\Category;
 use App\Models\Lookup;
 use App\Models\Question;
 use App\Models\QuestionCategory;
@@ -13,12 +14,15 @@ class StudentController extends Controller
 {
     public function examQuestions(Request $request)
     {
-        // get random questions from database
+        // user default category
         $categoryId = Auth::user()->category_id;
+
+        if ($request->has('category_id')) {
+            $categoryId = $request->category_id;
+        }
         $questions = [];
         $categoryCategories = \DB::table('category_categories')->where('parent', $categoryId)->get();
         $totalNoOfQuestions = $categoryCategories->sum('no_of_questions');
-//        return $totalNoOfQuestions;
 
         // get questions should be added to the exam
         $getQuestions = QuestionCategory::where('category_id', $categoryId)->pluck('question_id');
@@ -50,14 +54,21 @@ class StudentController extends Controller
                 }
                 $questions[] = $getQuestion;
             }
+            // unique questions
+            $questions = array_unique($questions);
         }
         $userQuestions = \DB::table('user_question_answers')
             ->where('user_id', Auth::id())->first();
-        if (!$userQuestions) {
+        // get all users questions categories
+        $userQuestionsCategories = \DB::table('user_question_answers')
+            ->where('user_id', Auth::id())
+            ->pluck('category_id')->unique()->toArray();
+        if (!$userQuestions || ($request->has('category_id') && !in_array($categoryId, $userQuestionsCategories))) {
             foreach ($questions as $question) {
                 \DB::table('user_question_answers')->insert([
                     'user_id' => Auth::id(),
                     'question_id' => $question,
+                    'category_id' => $categoryId,
                     'answer_id' => null,
                     'is_correct' => null,
                     'created_at' => now(),
