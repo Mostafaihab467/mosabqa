@@ -23,7 +23,7 @@
                         <h1 class="text-danger">
                             {{__('admin.You have failed the test')}}
                         </h1>
-                        <h1 class="text-success">
+                        <h1 class="text-danger">
                             {{__('admin.Your grade is')}} {{Auth::user()->grade}}
                         </h1>
                     @endif
