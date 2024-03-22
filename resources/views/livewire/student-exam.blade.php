@@ -54,7 +54,7 @@
                                         $checkExtraQuestion = \DB::table('user_question_answers')->where('user_id', Auth::id())
                                         ->where('category_id', \App\Models\Category::where('name', env('EXTRA_CATEGORY'))->first()->id)->first();
                                     @endphp
-                                    @if(!$checkExtraQuestion)
+                                    @if(!$checkExtraQuestion && \App\Models\Lookup:: where('name', 'exam_start_date')->first()->value <= now())
                                         <div class="fs-1">
                                             {{__('admin.Start extra exam')}} {{env('EXTRA_CATEGORY')}}
                                             <a class="btn btn-primary"
