@@ -116,4 +116,6 @@
 "You have failed the test" => "You have failed the test",
 "Congratulations, you have passed the exam with grade" => "Congratulations, you have passed the exam with grade",
 "Sorry, you have failed the exam, Your grade is" => "Sorry, you have failed the exam, Your grade is",
+"Start extra exam" => "Start extra exam",
+"Appear on register page" => "Appear on register page",
 ];

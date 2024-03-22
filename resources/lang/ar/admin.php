@@ -116,4 +116,6 @@
 "You have failed the test" => "لقد فشلت في الاختبار",
 "Congratulations, you have passed the exam with grade" => "تهانينا، لقد اجتزت الامتحان بتقدير",
 "Sorry, you have failed the exam, Your grade is" => "عذرًا، لقد فشلت في الامتحان، درجتك هي",
+"Start extra exam" => "بدء الامتحان الإضافي",
+"Appear on register page" => "تظهر في صفحة التسجيل",
 ];
