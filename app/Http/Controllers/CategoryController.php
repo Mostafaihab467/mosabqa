@@ -66,6 +66,7 @@ class CategoryController extends Controller
         $category = Category::create([
             'name' => $request->name,
             'record_state' => $request->record_state ?? '0',
+            'appear' => $request->appear ?? '0',
         ]);
         if ($category) {
             foreach ($request->repeater as $item) {
@@ -125,6 +126,7 @@ class CategoryController extends Controller
         $category = Category::find($id)->update([
             'name' => $request->name,
             'record_state' => $request->record_state ?? '0',
+            'appear' => $request->appear ?? '0',
         ]);
         if ($category) {
             \DB::table('category_categories')->where('parent', $id)->delete();
