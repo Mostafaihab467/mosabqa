@@ -88,7 +88,6 @@
 
         document.getElementById($div).innerHTML = "<div class='d-flex justify-content-center'><div class='spinner-border'><span class='sr-only'>Loading...</span></div></div>";
 
-        console.log("Mgahed2", $url)
         $.ajax({
             type: $type,
             url: $url,
@@ -103,13 +102,11 @@
             },
             error: function (data, textStatus, errorThrown) {
                 console.log(data);
-                console.log("Mgahed3", $url)
             },
             complete: function (data) {
                 // console.log(data);
             }
         });
-        console.log("Mgahed4", $url)
     }
 
     function ajaxFormSubmit($url, $type = "POST", $formData = null) {

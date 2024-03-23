@@ -85,72 +85,66 @@
 @section('pageScripts')
     <script src="{{asset('assets/plugins/custom/jstree/jstree.bundle.js')}}"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             $("#kt_tree_translation").jstree({
-                "core": {
-                    'data': {
-                        'url': function (node) {
+                "core" : {
+                    'data' : {
+                        'url' : function (node) {
                             return '{{route('jsonTranslation')}}';
                         },
-                        'data': function (node) {
-                            return {'parent': node.id};
+                        'data' : function (node) {
+                            return { 'parent' : node.id };
                         }
                     },
-                    "themes": {
+                    "themes" : {
                         "responsive": false
                     },
-                    "check_callback": true,
+                    "check_callback" : true,
                 },
-                "state": {"key": "{{Request::url()}}"},
-                "themes": {
+                "state" : { "key" : "{{Request::url()}}" },
+                "themes" : {
                     "responsive": true
                 },
-                "plugins": ["wholerow", "state"]
+                "plugins" : ["wholerow","state"]
             });
         });
 
         $('#kt_tree_translation').on("select_node.jstree", function (e, data) {
-            ajaxSubmit('{{route('translations-item')}}/' + data.node.id, 'formData', 'GET')
+            ajaxSubmit('{{route('translations-item')}}/' + data.node.id,'formData','GET')
         });
 
     </script>
 
     <script type="text/javascript">
 
-        function updateTranslation($div, $id, $lang) {
+        function updateTranslation($div,$id,$lang) {
 
             var formData = new FormData();
             formData.append('id', $id);
             formData.append('lang', $lang);
             formData.append('text', $div.value);
 
-            ajaxFormSubmit('{{route('translations.update')}}', 'POST', formData)
+            ajaxFormSubmit('{{route('translations.update')}}','POST',formData)
         }
 
         function postForm() {
             form = document.getElementById("SearchForm");
 
-            @if(env('APP_ENV') == 'production')
-                $url = '{{secure_url('translation/translations-search')}}';
-            @else
-                $url = '{{url('translation/translations-search')}}';
-            @endif
-            $url += '/?site_id=' + form.site_id.value
+            $url = '{{route('translations.search')}}?site_id=' + form.site_id.value
                 + '&translation_published=' + form.translation_published.value
                 + '&find_in_value=' + form.find_in_value.value
                 + '&find_in_field=' + form.find_in_field.value
                 + '&find_in_operator=' + form.find_in_operator.value;
 
-            console.log("Mgahedd", $url);
-            ajaxSubmit($url, 'formData', 'GET')
+            ajaxSubmit($url,'formData','GET')
         }
 
-        function googleTranslation($div, $id, $lang, $str, defaultLang = false) {
-            var obj = document.getElementById($div);
+        function googleTranslation($div,$id,$lang,$str,defaultLang = false) {
+            var obj=document.getElementById($div);
 
-            if (defaultLang == false) {
-                $.get('https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=' + $lang + '&dt=t&q=' + $str, function (data, status) {
-                    obj.value = data[0][0][0];
+            if(defaultLang == false){
+                $.get('https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl='+$lang+'&dt=t&q='+$str, function(data, status){
+                    obj.value=data[0][0][0];
                 });
             } else {
                 obj.value = $str;
@@ -161,10 +155,10 @@
 
         }
 
-        function globalTranslation($div, $id, $lang) {
-            var obj = document.getElementById($div);
+        function globalTranslation($div,$id,$lang) {
+            var obj=document.getElementById($div);
 
-            if (confirm('{{__('admin.system.translations.Are you sure you want to change all system translations as this')}}' + ' [' + obj.value + ']')) {
+            if (confirm('{{__('admin.system.translations.Are you sure you want to change all system translations as this')}}' + ' ['+ obj.value +']')) {
 
                 var formData = new FormData();
                 formData.append('id', $id);
