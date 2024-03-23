@@ -19,7 +19,7 @@ class StudentExam extends Component
     {
         sleep(1);
         $this->counter++;
-        if ($this->answer_id != null){
+        if ($this->answer_id != null) {
             $isCorrect = $this->checkAnswer();
         } else {
             $isCorrect = 0;
@@ -69,26 +69,28 @@ class StudentExam extends Component
             if ($degree >= Lookup::where('name', 'success_percentage')->first()->value ?? -1) {
                 if (count($categoriesFinished) >= 2) {
                     $msg = "<span class='text-success'>" . __('admin.Congratulations, you have passed the exam with grade') . " " . $degree . "%</span>";
+                    $msg .= "</br></br>" . __('admin.Your serial number is') . " " . auth()->user()->serial ?? '-';
                 }
-                $msg .= "</br></br>" . __('admin.Your serial number is') . " " . auth()->user()->serial ?? '-';
             } else {
                 if (count($categoriesFinished) >= 2) {
                     $msg = "<span class='text-danger'>" . __('admin.Sorry, you have failed the exam, Your grade is') . " " . $degree . "%</span>";
                 }
             }
-            $msg = __('admin.You have finished your questions') . '</br></br>' . $msg;
+            if (count($categoriesFinished) >= 2) {
+                $msg = __('admin.You have finished your questions') . '</br></br>' . $msg;
+            }
             $startExam = false;
-        } else if(!$question) {
+        } else if (!$question) {
             $msg = __('admin.You dont have any question');
             $startExam = false;
-        } else if (!\App\Models\Lookup::where('name', 'exam_start_date')->where('value', '<=', now())->first()){
+        } else if (!\App\Models\Lookup::where('name', 'exam_start_date')->where('value', '<=', now())->first()) {
             $msg = __('admin.Exam not started yet');
             $startExam = false;
-        } else if (!\App\Models\Lookup::where('name', 'exam_end_date')->where('value', '>=', now())->first()){
+        } else if (!\App\Models\Lookup::where('name', 'exam_end_date')->where('value', '>=', now())->first()) {
             $msg = __('admin.Exam finished');
             $startExam = false;
         }
-        return view('livewire.student-exam',[
+        return view('livewire.student-exam', [
             'question' => $question,
             'title' => __('admin.Question') . ' ' . $this->counter,
             'timer' => $this->timer,

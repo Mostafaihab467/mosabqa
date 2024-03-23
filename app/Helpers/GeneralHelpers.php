@@ -81,6 +81,11 @@ function getDgree($userId){
     if ($noUserQuestions != 0) {
         $user->grade = round((($correctAnswers / $noUserQuestions) * 100), 2);
         $user->save();
+        if (Auth::user()->roles->first()->name == 'student') {
+            $user->serial = getSerial();
+            $user->save();
+        }
+        getSerial();
     }
     return $noUserQuestions == 0 ? '-' : round((($correctAnswers / $noUserQuestions) * 100), 2);
 }
