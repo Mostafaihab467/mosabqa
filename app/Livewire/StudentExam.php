@@ -62,6 +62,7 @@ class StudentExam extends Component
         }
         $this->timer = Lookup::where('name', 'question_timer')->first()->value ?? 120;
 
+        $msg = '';
         $startExam = true;
         if (!$question && $allQuestionCount) {
             $degree = getDgree(auth()->id());
