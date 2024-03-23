@@ -103,11 +103,13 @@
             },
             error: function (data, textStatus, errorThrown) {
                 console.log(data);
+                console.log("Mgahed3", $url)
             },
             complete: function (data) {
                 // console.log(data);
             }
         });
+        console.log("Mgahed4", $url)
     }
 
     function ajaxFormSubmit($url, $type = "POST", $formData = null) {
