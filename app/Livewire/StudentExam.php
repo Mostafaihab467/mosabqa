@@ -46,6 +46,7 @@ class StudentExam extends Component
     {
         $userQuestion = \DB::table('user_question_answers')
             ->where('user_id', auth()->id());
+        $categoriesFinished = $userQuestion->pluck('category_id')->unique()->toArray();
 
         $allQuestionCount = $userQuestion->count();
         $noAnsweredQuestionCount = $userQuestion->whereNull('is_correct')->count();
@@ -65,10 +66,14 @@ class StudentExam extends Component
         if (!$question && $allQuestionCount) {
             $degree = getDgree(auth()->id());
             if ($degree >= Lookup::where('name', 'success_percentage')->first()->value ?? -1) {
-                $msg = "<span class='text-success'>" . __('admin.Congratulations, you have passed the exam with grade') . " " . $degree . "%</span>";
+                if (count($categoriesFinished) >= 2) {
+                    $msg = "<span class='text-success'>" . __('admin.Congratulations, you have passed the exam with grade') . " " . $degree . "%</span>";
+                }
                 $msg .= "</br></br>" . __('admin.Your serial number is') . " " . auth()->user()->serial ?? '-';
             } else {
-                $msg = "<span class='text-danger'>" . __('admin.Sorry, you have failed the exam, Your grade is') . " " . $degree . "%</span>";
+                if (count($categoriesFinished) >= 2) {
+                    $msg = "<span class='text-danger'>" . __('admin.Sorry, you have failed the exam, Your grade is') . " " . $degree . "%</span>";
+                }
             }
             $msg = __('admin.You have finished your questions') . '</br></br>' . $msg;
             $startExam = false;
