@@ -135,13 +135,13 @@
             @else
                 $url = '{{url('translation/translations-search')}}';
             @endif
-            console.log("Mgahedd", $url);
             $url += '/?site_id=' + form.site_id.value
                 + '&translation_published=' + form.translation_published.value
                 + '&find_in_value=' + form.find_in_value.value
                 + '&find_in_field=' + form.find_in_field.value
                 + '&find_in_operator=' + form.find_in_operator.value;
 
+            console.log("Mgahedd", $url);
             ajaxSubmit($url, 'formData', 'GET')
         }
 
