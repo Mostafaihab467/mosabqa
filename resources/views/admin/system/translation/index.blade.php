@@ -130,12 +130,7 @@
         function postForm() {
             form = document.getElementById("SearchForm");
 
-            @if(env('APP_ENV') == 'production')
-                $url = '{{secure_url('translation/translations-search')}}';
-            @else
-                $url = '{{url('translation/translations-search')}}';
-            @endif
-            $url += '/?site_id=' + form.site_id.value
+            $url = '{{route('translations.search')}}?site_id=' + form.site_id.value
                 + '&translation_published=' + form.translation_published.value
                 + '&find_in_value=' + form.find_in_value.value
                 + '&find_in_field=' + form.find_in_field.value

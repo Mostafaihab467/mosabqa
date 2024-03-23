@@ -63,7 +63,7 @@ class User extends Authenticatable implements LaratrustUser
 
     public function getGradeAttribute($value)
     {
-        return round($value, 2);
+        return !is_null($value) ? round($value, 2) : null;
     }
 
     public function setGradeAttribute($value)
