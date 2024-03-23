@@ -87,7 +87,7 @@
                                     @foreach($selectedItem->userQuestionAnswers as $item)
                                         <tr>
                                             <td dir="rtl">{{$item->question->question}}</td>
-                                            <td dir="rtl">{{$item->question->name}}</td>
+                                            <td dir="rtl">{{$item->question->name ?? $item->question->category->name ?? '-'}}</td>
                                             <td dir="rtl" @if(in_array($item->answer_id, $item->question->answers->pluck('id')->toArray())) class="text-success" @else class="text-danger" @endif>
                                                 {{@$item->answer->answer ?? '-'}}
                                             </td>
