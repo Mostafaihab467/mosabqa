@@ -17,6 +17,11 @@
                     @else
                         @if(Auth::user()->grade && Auth::user()->grade >= \App\Models\Lookup::where('name', 'success_percentage')->first()->value)
                             <h1>
+                                <span class='text-success'>
+                                    {{__('admin.Congratulations, you have passed the exam with grade') . " " . getDgree(auth()->id())}}%
+                                </span>
+                            </h1>
+                            <h1>
                                 {{__('admin.Your serial number is')}} {{Auth::user()->serial}}
                             </h1>
                         @elseif(is_null(Auth::user()->grade))
