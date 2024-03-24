@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\Gender;
+use App\Models\Lookup;
 use App\Models\User;
 use App\Models\UserQuestionAnswers;
 
@@ -81,11 +82,10 @@ function getDgree($userId){
     if ($noUserQuestions != 0) {
         $user->grade = round((($correctAnswers / $noUserQuestions) * 100), 2);
         $user->save();
-        if (Auth::user()->roles->first()->name == 'student') {
+        if (Auth::user()->roles->first()->name == 'student' && $user->grade >= Lookup::where('name', 'success_percentage')->first()->value) {
             $user->serial = getSerial();
             $user->save();
         }
-        getSerial();
     }
     return $noUserQuestions == 0 ? '-' : round((($correctAnswers / $noUserQuestions) * 100), 2);
 }
