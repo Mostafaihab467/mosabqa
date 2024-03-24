@@ -17,7 +17,7 @@ class StudentExam extends Component
 
     public function nextQuestion()
     {
-        sleep(1);
+        sleep(2);
         $this->counter++;
         if ($this->answer_id != null) {
             $isCorrect = $this->checkAnswer();
