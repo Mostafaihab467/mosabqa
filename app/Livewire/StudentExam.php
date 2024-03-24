@@ -28,10 +28,11 @@ class StudentExam extends Component
             ->where('user_id', auth()->id())
             ->where('question_id', $this->question_id)
             ->update([
-                'answer_id' => $this->answer_id,
+                'answer_id' => $this->answer_id ?? null,
                 'is_correct' => $isCorrect,
                 'updated_at' => now()
             ]);
+        $this->answer_id = null;
         $this->timer = $this->timer = Lookup::where('name', 'question_timer')->first()->value ?? 120;
         $this->dispatch('contentChanged', $this->timer);
     }
