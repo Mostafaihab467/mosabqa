@@ -32,12 +32,15 @@
                                 </a>
                             </h1>
                         @else
-                            <h1 class="text-danger">
-                                {{__('admin.You have failed the test')}}
-                            </h1>
-                            <h1 class="text-danger">
-                                {{__('admin.Your grade is')}} {{Auth::user()->grade}}
-                            </h1>
+{{--                            <h1 class="text-danger">--}}
+{{--                                {{__('admin.You have failed the test')}}--}}
+{{--                            </h1>--}}
+{{--                            <h1 class="text-danger">--}}
+{{--                                {{__('admin.Your grade is')}} {{Auth::user()->grade}}--}}
+{{--                            </h1>--}}
+                        <a href="{{route('student.questions')}}" class="btn btn-primary">
+                            {{__('admin.Start test')}}
+                        </a>
                         @endif
                     @endif
                 @else
