@@ -6,6 +6,10 @@
             {{--@include('main.master.includes.toolbar', [
     'title' => __('admin.Dashboard'),
      ])--}}
+            @php
+                $userQuestionsCount = \DB::table('user_question_answers')->where('user_id', Auth::id())->where('category_id', Auth::user()->category_id)->count();
+                $answeredQuestionsCount = \DB::table('user_question_answers')->where('user_id', Auth::id())->where('category_id', Auth::user()->category_id)->whereNotNull('is_correct')->count();
+            @endphp
             <div class="container-fluid h-100">
                 @role('student')
                     @if(\App\Models\Lookup:: where('name', 'exam_start_date')->first()->value > now())
@@ -32,15 +36,18 @@
                                 </a>
                             </h1>
                         @else
-{{--                            <h1 class="text-danger">--}}
-{{--                                {{__('admin.You have failed the test')}}--}}
-{{--                            </h1>--}}
-{{--                            <h1 class="text-danger">--}}
-{{--                                {{__('admin.Your grade is')}} {{Auth::user()->grade}}--}}
-{{--                            </h1>--}}
-                        <a href="{{route('student.questions')}}" class="btn btn-primary">
-                            {{__('admin.Start test')}}
-                        </a>
+                            @if($userQuestionsCount == $answeredQuestionsCount)
+                                <h1 class="text-danger">
+                                    {{__('admin.You have failed the test')}}
+                                </h1>
+                                <h1 class="text-danger">
+                                    {{__('admin.Your grade is')}} {{Auth::user()->grade}}
+                                </h1>
+                            @else
+                            <a href="{{route('student.questions')}}" class="btn btn-primary">
+                                {{__('admin.Start test')}}
+                            </a>
+                            @endif
                         @endif
                     @endif
                 @else
