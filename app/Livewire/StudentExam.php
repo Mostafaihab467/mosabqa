@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Answer;
 use App\Models\Lookup;
 use App\Models\Question;
+use App\Models\UserQuestionAnswers;
 use Livewire\Component;
 
 class StudentExam extends Component
@@ -24,13 +25,12 @@ class StudentExam extends Component
         } else {
             $isCorrect = 0;
         }
-        \DB::table('user_question_answers')
+        UserQuestionAnswers::query()
             ->where('user_id', auth()->id())
             ->where('question_id', $this->question_id)
             ->update([
                 'answer_id' => $this->answer_id ?? null,
                 'is_correct' => $isCorrect,
-                'updated_at' => now()
             ]);
         $this->answer_id = null;
         $this->timer = $this->timer = Lookup::where('name', 'question_timer')->first()->value ?? 120;
@@ -45,7 +45,7 @@ class StudentExam extends Component
 
     public function render()
     {
-        $userQuestion = \DB::table('user_question_answers')
+        $userQuestion = UserQuestionAnswers::query()
             ->where('user_id', auth()->id());
         $categoriesFinished = $userQuestion->pluck('category_id')->unique()->toArray();
 
@@ -69,7 +69,11 @@ class StudentExam extends Component
             $degree = getDgree(auth()->id());
             if ($degree >= Lookup::where('name', 'success_percentage')->first()->value ?? -1) {
                 if (count($categoriesFinished) >= 2) {
-                    $msg = "<span class='text-success'>" . __('admin.Congratulations, you have passed the exam with grade') . " " . $degree . "%</span>";
+                    if (auth()->user()->grade2) {
+                        $msg = "<span class='text-success'>" . __('admin.Congratulations, you have passed final round with grade') . " " . $degree . "%</span>";
+                    } else {
+                        $msg = "<span class='text-success'>" . __('admin.Congratulations, you have passed the exam with grade') . " " . $degree . "%</span>";
+                    }
                     $msg .= "</br></br>" . __('admin.Your serial number is') . " " . auth()->user()->serial ?? '-';
                 }
             } else {

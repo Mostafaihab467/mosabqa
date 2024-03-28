@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Lookup;
 use App\Models\Question;
 use App\Models\QuestionCategory;
+use App\Models\UserQuestionAnswers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,6 +18,19 @@ class StudentController extends Controller
         // user default category
         $categoryId = Auth::user()->category_id;
 
+        $checkIfEligableForFinalRound = Auth::user()->is_success;
+
+        if (Lookup::where('name', 'final_round')->first()->value == '1') {
+            if (!$checkIfEligableForFinalRound) {
+                return redirect()->back()->with('error', __('admin.You are not eligible for the final round'));
+            } else {
+                if (Auth::user()->start_final_round == 0) {
+                    Auth::user()->update(['start_final_round' => 1]);
+                    UserQuestionAnswers::where('user_id', Auth::id())
+                        ->delete();
+                }
+            }
+        }
         if ($request->has('category_id')) {
             $categoryId = $request->category_id;
         }
@@ -57,22 +71,20 @@ class StudentController extends Controller
             // unique questions
             $questions = array_unique($questions);
         }
-        $userQuestions = \DB::table('user_question_answers')
+        $userQuestions = UserQuestionAnswers::query()
             ->where('user_id', Auth::id())->first();
         // get all users questions categories
-        $userQuestionsCategories = \DB::table('user_question_answers')
+        $userQuestionsCategories = UserQuestionAnswers::query()
             ->where('user_id', Auth::id())
             ->pluck('category_id')->unique()->toArray();
         if (!$userQuestions || ($request->has('category_id') && !in_array($categoryId, $userQuestionsCategories))) {
             foreach ($questions as $question) {
-                \DB::table('user_question_answers')->insert([
+                UserQuestionAnswers::query()->create([
                     'user_id' => Auth::id(),
                     'question_id' => $question,
                     'category_id' => $categoryId,
                     'answer_id' => null,
                     'is_correct' => null,
-                    'created_at' => now(),
-                    'updated_at' => now()
                 ]);
             }
         }

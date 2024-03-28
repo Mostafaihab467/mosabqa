@@ -48,7 +48,8 @@ function getAge($birthDate)
 }
 
 
-function sites(){
+function sites()
+{
     return collect([
         [
             'title' => 'English',
@@ -66,7 +67,8 @@ function sites(){
 }
 
 
-function getDgree($userId){
+function getDgree($userId)
+{
     $user = User::query()
         ->where('id', $userId)
         ->first();
@@ -80,10 +82,22 @@ function getDgree($userId){
         ->count();
 
     if ($noUserQuestions != 0) {
-        $user->grade = round((($correctAnswers / $noUserQuestions) * 100), 2);
+        $finalRound = Lookup::where('name', 'final_round')->first()->value;
+        if ($finalRound == '1') {
+            if ($user->start_final_round)
+                $user->grade2 = round((($correctAnswers / $noUserQuestions) * 100), 2);
+        } else {
+            $user->grade = round((($correctAnswers / $noUserQuestions) * 100), 2);
+        }
         $user->save();
-        if (Auth::user()->roles->first()->name == 'student' && $user->grade >= Lookup::where('name', 'success_percentage')->first()->value) {
-            $user->serial = getSerial();
+        $grade = ($finalRound == '1') ? $user->grade2 : $user->grade;
+        if (Auth::user()->roles->first()->name == 'student' && $grade >= Lookup::where('name', 'success_percentage')->first()->value) {
+            if ($finalRound == '1') {
+                if ($user->start_final_round)
+                    $user->serial2 = getSerial();
+            } else {
+                $user->serial = getSerial();
+            }
             $user->save();
         }
     }
@@ -96,11 +110,21 @@ function getSerial()
     $user = User::query()
         ->where('id', auth()->id())
         ->first();
-    if ($user->serial) {
-        return $user->serial;
+    $finalRound = Lookup::where('name', 'final_round')->first()->value;
+    if ($finalRound == '1') {
+        if ($user->serial2) {
+            return $user->serial2;
+        }
+        // get largest serial
+        $serial = User::query()
+            ->max('serial2');
+    } else {
+        if ($user->serial) {
+            return $user->serial;
+        }
+        // get largest serial
+        $serial = User::query()
+            ->max('serial');
     }
-    // get largest serial
-    $serial = User::query()
-        ->max('serial');
     return $serial + 1;
 }

@@ -1,3 +1,4 @@
+@php use App\Models\UserQuestionAnswers; @endphp
 @extends('main.master.master')
 @section('pageContent')
     <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
@@ -7,9 +8,17 @@
     'title' => __('admin.Dashboard'),
      ])--}}
             @php
-                $userQuestionsCount = \DB::table('user_question_answers')->where('user_id', Auth::id())->where('category_id', Auth::user()->category_id)->count();
-                $answeredQuestionsCount = \DB::table('user_question_answers')->where('user_id', Auth::id())->where('category_id', Auth::user()->category_id)->whereNotNull('is_correct')->count();
-                $categories = \DB::table('user_question_answers')->where('user_id', Auth::id())->pluck('category_id')->unique();
+            if (Auth::user()->is_success){
+                $userQuestionAnswersBase = UserQuestionAnswers::where('user_id', Auth::id())->onlyTrashed();
+                if (!(clone $userQuestionAnswersBase)->first()){
+                    $userQuestionAnswersBase = UserQuestionAnswers::where('user_id', Auth::id());
+                }
+            } else{
+                $userQuestionAnswersBase = UserQuestionAnswers::where('user_id', Auth::id());
+            }
+                $userQuestionsCount = (clone $userQuestionAnswersBase)->where('category_id', Auth::user()->category_id)->count();
+                $answeredQuestionsCount = (clone $userQuestionAnswersBase)->where('category_id', Auth::user()->category_id)->whereNotNull('is_correct')->count();
+                $categories = (clone $userQuestionAnswersBase)->pluck('category_id')->unique();
             @endphp
             <div class="container-fluid h-100">
                 @role('student')
@@ -25,7 +34,16 @@
                             {{__('admin.Start test')}}
                         </a>
                     @else
-                        @if(Auth::user()->grade && Auth::user()->grade >= \App\Models\Lookup::where('name', 'success_percentage')->first()->value)
+                        @if(Auth::user()->grade2 && Auth::user()->grade2 >= \App\Models\Lookup::where('name', 'success_percentage')->first()->value)
+                            <h1>
+                                    <span class='text-success'>
+                                        {{__('admin.Congratulations, you have passed final round with grade') . " " . getDgree(auth()->id())}}%
+                                    </span>
+                            </h1>
+                            <h1>
+                                {{__('admin.Your serial number is')}} {{Auth::user()->serial}}
+                            </h1>
+                        @elseif(Auth::user()->grade && Auth::user()->grade >= \App\Models\Lookup::where('name', 'success_percentage')->first()->value)
                             <h1>
                                     <span class='text-success'>
                                         {{__('admin.Congratulations, you have passed the exam with grade') . " " . getDgree(auth()->id())}}%
@@ -56,6 +74,11 @@
                             @endif
                         @endif
                     @endif
+                @endif
+                @if(\App\Models\Lookup::where('name', 'final_round')->first()->value == '1' && !Auth::user()->grade2)
+                    <a href="{{route('student.questions')}}" class="btn btn-success">
+                        {{__('admin.Final round')}}
+                    </a>
                 @endif
                 @else
                     <h1>
