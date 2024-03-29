@@ -2,7 +2,6 @@ pipeline {
     agent any
     environment {
         _PROJ_Name ='mosabqa'
-        branch = "master"
     }
     options {
         buildDiscarder(logRotator(numToKeepStr: '10', daysToKeepStr: '10', artifactNumToKeepStr: '10', artifactDaysToKeepStr: '10'))
@@ -10,12 +9,20 @@ pipeline {
         disableConcurrentBuilds()
     }
     stages {
+        stage('Print Branch Name') {
+            steps {
+                script {
+                    echo "Branch Name: ${env.BRANCH_NAME}"
+                }
+            }
+        }
         stage('deploy sail branch') {
             when {
                 branch 'sail'
             }
             steps {
                 script {
+                    echo "Deploying to sail branch"
                     sh '''
                         cd /var/www/mosabqasail
                         git config --global --add safe.directory /var/www/mosabqasail
@@ -32,6 +39,7 @@ pipeline {
             }
             steps {
                 script {
+                    echo "Deploying to master branch"
                     sh '''
                         cd /var/www/mosabqa
                         git config --global --add safe.directory /var/www/mosabqa
