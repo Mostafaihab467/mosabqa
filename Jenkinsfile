@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     if (env.GIT_BRANCH == 'origin/sail') {
-                        echo "Deploying to sail branch."
+                        echo "Deploying to sail branch.."
                         sh '''
                             cd /var/www/mosabqasail
                             git config --global --add safe.directory /var/www/mosabqasail
@@ -36,7 +36,7 @@ pipeline {
             steps {
                 script {
                     if (env.GIT_BRANCH == 'origin/master') {
-                        echo "Deploying to master branch."
+                        echo "Deploying to master branch.."
                         sh '''
                             cd /var/www/mosabqa
                             git config --global --add safe.directory /var/www/mosabqa
