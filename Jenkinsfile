@@ -11,32 +11,34 @@ pipeline {
 
          stages {
           stage('deploy sail branch'){
-         if (env.BRANCH_NAME == 'sail') {
-            steps {
-                sh '''
-                  cd /var/www/mosabqasail
-                  git config --global --add safe.directory /var/www/mosabqasail
-                  git pull origin/sail
-                  php artisan queue:restart
-                  sudo chmod 777 -R storage
-                  exit
-                  '''
+            if (env.BRANCH_NAME == 'sail') {
+              script {
+                steps {
+                    sh '''
+                      cd /var/www/mosabqasail
+                      git config --global --add safe.directory /var/www/mosabqasail
+                      git pull origin sail
+                      php artisan queue:restart
+                      sudo chmod 777 -R storage
+                      '''
+                }
+              }
             }
-        }
-      }
-        stage('deploy master branch'){
-         if (env.BRANCH_NAME == 'master') {
-            steps {
-                sh '''
-                  cd /var/www/mosabqa
-                  git config --global --add safe.directory /var/www/mosabqa
-                  git pull origin/master
-                  php artisan queue:restart
-                  sudo chmod 777 -R storage
-                  exit
-                  '''
-            }
-        }
-      }
+          }
+          stage('deploy master branch'){
+            if (env.BRANCH_NAME == 'master') {
+                steps {
+                  script {
+                    sh '''
+                      cd /var/www/mosabqa
+                      git config --global --add safe.directory /var/www/mosabqa
+                      git pull origin master
+                      php artisan queue:restart
+                      sudo chmod 777 -R storage
+                      '''
+                  }
+                }
+             }
+          }
     }
 }
