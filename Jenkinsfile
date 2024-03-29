@@ -20,6 +20,7 @@ pipeline {
               php artisan queue:restart
               sudo chmod 777 -R storage
             '''
+            echo 'deploy sail branch'
           }
         }
       }
@@ -35,6 +36,7 @@ pipeline {
               php artisan queue:restart
               sudo chmod 777 -R storage
             '''
+            echo 'deploy master branch'
           }
         }
       }
