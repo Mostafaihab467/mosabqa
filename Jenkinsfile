@@ -25,7 +25,7 @@ pipeline {
                             cd /var/www/mosabqasail
                             git config --global --add safe.directory /var/www/mosabqasail
                             git pull origin sail
-                            sudo -S chmod 777 -R storage
+                            sudo chmod 777 -R storage
                             exit
                         '''
                     }
@@ -42,7 +42,7 @@ pipeline {
                             git config --global --add safe.directory /var/www/mosabqa
                             git pull origin master
                             php artisan queue:restart
-                            sudo -S chmod 777 -R storage
+                            sudo chmod 777 -R storage
                             exit
                         '''
                     }
