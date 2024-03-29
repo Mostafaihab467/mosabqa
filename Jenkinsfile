@@ -18,7 +18,7 @@ pipeline {
         }
         stage('deploy sail branch') {
             when {
-                branch 'sail'
+                branch 'origin/sail'
             }
             steps {
                 script {
@@ -35,7 +35,7 @@ pipeline {
         }
         stage('deploy master branch') {
             when {
-                branch 'master'
+                branch 'origin/master'
             }
             steps {
                 script {
