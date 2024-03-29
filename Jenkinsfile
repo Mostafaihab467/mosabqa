@@ -25,8 +25,6 @@ pipeline {
                             cd /var/www/mosabqasail
                             git config --global --add safe.directory /var/www/mosabqasail
                             git pull origin sail
-                            alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'
-                            sail artisan queue:restart
                             sudo chmod 777 -R storage
                         '''
                     }
