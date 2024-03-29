@@ -18,8 +18,8 @@ pipeline {
         }
         stage('deploy sail branch') {
             steps {
-                if (env.GIT_BRANCH == 'origin/sail') {
-                    script {
+                script {
+                    if (env.GIT_BRANCH == 'origin/sail') {
                         echo "Deploying to sail branch"
                         sh '''
                             cd /var/www/mosabqasail
@@ -34,8 +34,8 @@ pipeline {
         }
         stage('deploy master branch') {
             steps {
-                if (env.GIT_BRANCH == 'origin/master') {
-                    script {
+                script {
+                    if (env.GIT_BRANCH == 'origin/master') {
                         echo "Deploying to master branch"
                         sh '''
                             cd /var/www/mosabqa
