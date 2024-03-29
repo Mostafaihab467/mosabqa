@@ -29,6 +29,12 @@ class User extends Authenticatable implements LaratrustUser
         'password',
         'category_id',
         'grade',
+        'serial',
+        'is_success',
+        'start_final_round',
+        'grade2',
+        'serial2',
+        'final_serial',
     ];
 
     /**

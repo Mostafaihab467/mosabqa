@@ -52,7 +52,6 @@ Route::group([
             Route::resource('lookups', LookupController::class)->names('lookups');
 
 
-
             Route::group(['prefix' => 'translation', 'namespace' => 'Translation',], function () {
                 Route::get('translations', [TranslationController::class, 'index'])->name('translations.index');
                 Route::get('jsonTranslation', [TranslationController::class, 'jsonTranslation'])->name('jsonTranslation');
@@ -75,5 +74,6 @@ Route::group([
 
     Route::post('/data-by-nid', [ProfileController::class, 'dataByNid'])->name('auth.get-user-by-nid');
 });
+Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 require __DIR__ . '/auth.php';
 require __DIR__ . '/student.php';

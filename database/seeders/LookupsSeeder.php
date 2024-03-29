@@ -29,7 +29,11 @@ class LookupsSeeder extends Seeder
             [
                 'name' => 'exam_end_date',
                 'value' => '2024-04-20 23:59:59',
-            ]
+            ],
+            [
+                'name' => 'final_round',
+                'value' => '0',
+            ],
         ];
         Lookup::insert($data);
     }

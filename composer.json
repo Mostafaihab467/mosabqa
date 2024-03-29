@@ -14,6 +14,7 @@
         "livewire/livewire": "^3.4",
         "mcamara/laravel-localization": "^1.8",
         "orangehill/iseed": "^3.0",
+        "rap2hpoutre/laravel-log-viewer": "^2.4",
         "santigarcor/laratrust": "^8.2"
     },
     "require-dev": {
