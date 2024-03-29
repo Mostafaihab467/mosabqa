@@ -12,7 +12,7 @@ pipeline {
         stage('Print Branch Name') {
             steps {
                 script {
-                    echo "Branch Name: ${env.BRANCH_NAME}"
+                    echo "Branch Name: ${env.GIT_BRANCH}"
                 }
             }
         }
