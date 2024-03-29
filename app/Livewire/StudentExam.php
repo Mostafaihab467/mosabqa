@@ -58,6 +58,7 @@ class StudentExam extends Component
 
         if ($userQuestion) {
             $question = Question::with('answers')->find($userQuestion->question_id);
+            \Log::info("question: ", [$question->id]);
             $this->question_id = $question->id;
         } else {
             $question = [];
