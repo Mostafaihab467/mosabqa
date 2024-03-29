@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         _PROJ_Name ='mosabqa'
-        branch = "${env.BRANCH_NAME}"
+        branch = "master"
     }
     options {
         buildDiscarder(logRotator(numToKeepStr: '10', daysToKeepStr: '10', artifactNumToKeepStr: '10', artifactDaysToKeepStr: '10'))
