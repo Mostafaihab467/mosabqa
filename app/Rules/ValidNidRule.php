@@ -39,7 +39,12 @@ class ValidNidRule implements ValidationRule
         }
         // check if age is between 7 and 65
         $age = date_diff(date_create($birthDate), date_create('now'))->y;
-        if ($age < 7 || $age > 65) {
+        if ($age < 6 || $age > 65) {
+            return false;
+        }
+
+        // double check for age.
+        if (getAge($birthDate) < 6 || getAge($birthDate) > 65) {
             return false;
         }
         return true;
