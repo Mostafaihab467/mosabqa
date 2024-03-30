@@ -8,12 +8,13 @@
     'title' => __('admin.Dashboard'),
      ])--}}
             @php
+            $finalRound = \App\Models\Lookup::where('name', 'final_round')->first()->value;
             if (Auth::user()->is_success){
                 $userQuestionAnswersBase = UserQuestionAnswers::where('user_id', Auth::id())->onlyTrashed();
                 if (!(clone $userQuestionAnswersBase)->first()){
                     $userQuestionAnswersBase = UserQuestionAnswers::where('user_id', Auth::id());
                 }
-            } else{
+            } else {
                 $userQuestionAnswersBase = UserQuestionAnswers::where('user_id', Auth::id());
             }
                 $userQuestionsCount = (clone $userQuestionAnswersBase)->where('category_id', Auth::user()->category_id)->count();
@@ -29,7 +30,7 @@
                             </span>
                     </h1>
                 @else
-                    @if($categories->count() <= 1)
+                    @if($finalRound != '1' && $categories->count() <= 1)
                         <a href="{{route('student.questions')}}" class="btn btn-primary">
                             {{__('admin.Start test')}}
                         </a>
