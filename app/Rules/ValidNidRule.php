@@ -43,7 +43,7 @@ class ValidNidRule implements ValidationRule
             return false;
         }
 
-        // double check for age
+        // double check for age.
         if (getAge($birthDate) < 6 || getAge($birthDate) > 65) {
             return false;
         }
