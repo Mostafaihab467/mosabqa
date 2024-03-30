@@ -54,11 +54,9 @@ class StudentExam extends Component
         $this->counter = $allQuestionCount - $noAnsweredQuestionCount + 1;
 
         $userQuestion = $userQuestion->whereNull('is_correct')->first();
-        \Log::info("userQuestoins: ", [$userQuestion]);
 
         if ($userQuestion) {
             $question = Question::with('answers')->find($userQuestion->question_id);
-            \Log::info("question: ", [$question]);
             $this->question_id = $question->id;
         } else {
             $question = [];
