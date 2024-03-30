@@ -21,7 +21,7 @@
         <tbody>
         @foreach($data as $item)
             <tr>
-                <td>{{$item->id}}</td> 
+                <td>{{$item->id}}</td>
                 <td>{{$item->role}}</td>
                 <td>{{@$item->name}}</td>
                 <td>{{@$item->nid}}</td>
