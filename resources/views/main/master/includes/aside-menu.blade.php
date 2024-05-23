@@ -202,7 +202,7 @@
                 </a>
                 <!--end:Menu link-->
 
-                {{--@if(now() >= \App\Models\Lookup::where('name', 'exam_end_date')->first()->value && now())
+                @if(now() >= \App\Models\Lookup::where('name', 'exam_end_date')->first()->value && now())
                     <!--begin:Menu link-->
                     <a class="menu-link @if(request()->routeIs('student.answers')){{'active'}}@endif"
                        href="{{route('student.answers')}}">
@@ -212,7 +212,7 @@
                         <span class="menu-title">{{__('admin.Answers')}}</span>
                     </a>
                     <!--end:Menu link-->
-                @endif--}}
+                @endif
             </div>
             <!--end:Menu item-->
         </div>
