@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LookupController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\TranslationController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
@@ -48,6 +49,7 @@ Route::group([
         Route::group(['middleware' => ['role:super-admin|admin']], function () {
             Route::resource('categories', CategoryController::class)->names('categories');
             Route::resource('questions', QuestionController::class)->names('questions');
+            Route::resource('schools', SchoolController::class)->names('schools');
             Route::resource('all-users', UserController::class)->names('admin.users');
             Route::resource('lookups', LookupController::class)->names('lookups');
 

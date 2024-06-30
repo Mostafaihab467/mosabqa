@@ -123,6 +123,19 @@
                 <!--end:Menu link-->
             </div>
 
+            <!--Schools-->
+            <div class="menu-item">
+                <!--begin:Menu link-->
+                <a class="menu-link @if(str_contains($currentRouteName, 'schools')){{'active'}}@endif"
+                   href="{{route('schools.index')}}">
+                    <span class="menu-icon">
+                        <i class="fa fa-list"></i>
+                    </span>
+                    <span class="menu-title">{{__('admin.Schools')}}</span>
+                </a>
+                <!--end:Menu link-->
+            </div>
+
             <!--Users-->
             <div class="menu-item">
                 <!--begin:Menu link-->
