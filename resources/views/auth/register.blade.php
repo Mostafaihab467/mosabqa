@@ -60,8 +60,8 @@
                                 <label for="school">
                                     {{__('admin.Your school')}}
                                 </label>
-                                <select id="school" name="school" class="form-select" data-control="select2"
-                                        data-placeholder="{{__('admin.Select school')}}">
+                                <select id="school" name="school" class="form-select @error('school_name') is-invalid @enderror" data-control="select2"
+                                        data-placeholder="{{__('admin.Select school')}}" required>
                                     <option></option>
                                     @foreach(\App\Models\School::all() as $school)
                                         <option value="{{$school->id}}">{{$school->name}}</option>
@@ -74,6 +74,9 @@
                                        class="form-control bg-transparent d-none"
                                        value="{{old('school_name')}}"
                                 />
+                                @error('school_name')
+                                <div class="fv-plugins message-container invalid-feedback">{{$message}}</div>
+                                @enderror
                                 @error('school')
                                 <div class="fv-plugins message-container invalid-feedback">{{$message}}</div>
                                 @enderror

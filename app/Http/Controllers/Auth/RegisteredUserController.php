@@ -40,6 +40,8 @@ class RegisteredUserController extends Controller
             // nid unique, length 14, numeric
             'nid' => ['required', 'unique:'.User::class, 'digits:14', 'numeric', new ValidNidRule()],
             'category_id' => 'required|exists:categories,id',
+            'school' => 'nullable|exists:schools,id',
+            'school_name' => 'nullable|required_if:school,other|string|max:255',
         ]);
 
         // birth_date
