@@ -54,9 +54,9 @@ class CategoryController extends Controller
         // validate the request
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255|unique:categories,name',
-            'repeater' => 'required|array',
-            'repeater.*.child' => 'required|integer',
-            'repeater.*.questionsNo' => 'required|integer',
+            'repeater' => 'array|nullable',
+            'repeater.*.child' => 'integer|required_if:repeater,!=,null',
+            'repeater.*.questionsNo' => 'integer|required_if:repeater,!=,null',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->with('error', __('admin.Failed to create item'))->withErrors($validator)->withInput();
@@ -68,7 +68,7 @@ class CategoryController extends Controller
             'record_state' => $request->record_state ?? '0',
             'appear' => $request->appear ?? '0',
         ]);
-        if ($category) {
+        if ($category && $request->repeater) {
             foreach ($request->repeater as $item) {
                 \DB::table('category_categories')->insert([
                     'parent' => $category->id,
@@ -115,8 +115,8 @@ class CategoryController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255|unique:categories,name,' . $id,
             'repeater' => 'nullable|array',
-            'repeater.*.child' => 'required|integer',
-            'repeater.*.questionsNo' => 'required|integer',
+            'repeater.*.child' => 'integer|required_if:repeater,!=,null',
+            'repeater.*.questionsNo' => 'integer|required_if:repeater,!=,null',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->with('error', __('admin.Failed to update item'))->withErrors($validator)->withInput();
@@ -130,12 +130,14 @@ class CategoryController extends Controller
         ]);
         if ($category) {
             \DB::table('category_categories')->where('parent', $id)->delete();
-            foreach ($request->repeater as $item) {
-                \DB::table('category_categories')->insert([
-                    'parent' => $id,
-                    'child' => $item['child'],
-                    'no_of_questions' => $item['questionsNo'],
-                ]);
+            if ($request->repeater) {
+                foreach ($request->repeater as $item) {
+                    \DB::table('category_categories')->insert([
+                        'parent' => $id,
+                        'child' => $item['child'],
+                        'no_of_questions' => $item['questionsNo'],
+                    ]);
+                }
             }
             return redirect()->route('categories.index')->with('success', __('admin.Item updated successfully'));
         }

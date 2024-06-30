@@ -12,17 +12,16 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::with('roles', 'category')->get();
+        $users = User::with('roles', 'category', 'school')->get();
         foreach ($users as $user) {
 
-            $user->degree = getDgree($user->id);
+            $user->gradeDegree = getDgree($user->id);
             $user->role = $user->roles->first()->display_name;
         }
         $result = [
             'data' => $users,
             'title' => __('admin.Users'),
         ];
-//        return $result;
         return view('pages.admin.users.index', $result);
     }
 

@@ -7,6 +7,7 @@
         </div>
     </div>
 
+    @php($countQuestions =  \App\Models\Question::where('category_id', 2)->count())
     <div class="collapse show" id="kt_docs_card_collapsible_details">
         <div class="card-body">
             <div class="row mb-7">
@@ -27,17 +28,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 hide-no-category-question">
                     <button type="button" onclick="checkRandom()" class="btn btn-primary disabled" id="randomChoose">
                         {{__('admin.Random choose')}}
                     </button>
                 </div>
             </div>
-            <h3 class="text-center">
+            <h3 class="text-center hide-no-category-question">
                 {{__('admin.You choose')}} <span id="count">0</span> {{__('admin.From')}} <span id="totalQs">15</span>
             </h3>
-            <div class="cards row d-none" id="checkBoxCards">
-                @php($countQuestions =  \App\Models\Question::where('category_id', 2)->count())
+            <div class="cards row d-none hide-no-category-question" id="checkBoxCards">
                 @for($i = 0 ; $i < $countQuestions ; $i++)
                     <div class="card col-md-4 col-6">
                         <div class="form-check form-check-custom form-check-solid form-check-lg">

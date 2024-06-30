@@ -35,6 +35,8 @@ class User extends Authenticatable implements LaratrustUser
         'grade2',
         'serial2',
         'final_serial',
+        'degree',
+        'school_id',
     ];
 
     /**
@@ -75,5 +77,10 @@ class User extends Authenticatable implements LaratrustUser
     public function setGradeAttribute($value)
     {
         $this->attributes['grade'] = round($value, 2);
+    }
+
+    public function school()
+    {
+        return $this->belongsTo(School::class);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\School;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use App\Rules\ValidNidRule;
@@ -47,6 +48,17 @@ class RegisteredUserController extends Controller
         // gender
         $gender = getGender($request->nid);
 
+        if (isset($request->school_name) && $request->school_name) {
+            $checkSchool = School::where('name', $request->school_name)->first();
+            if ($checkSchool) {
+                $school = $checkSchool;
+            } else {
+                $school = School::create([
+                    'name' => $request->school_name,
+                ]);
+            }
+        }
+
         $user = User::create([
             'name' => $request->name,
             'category_id' => $request->category_id ?? null,
@@ -55,6 +67,8 @@ class RegisteredUserController extends Controller
             'nid' => $request->nid,
             'birth_date' => $birthDate,
             'gender' => $gender,
+            'school_id' => isset($request->school) && !is_null($request->school) && $request->school != 'other' ? $request->school : ($school->id ?? null),
+            'degree' => $request->degree ?? null,
             'email_verified_at' => now(),
         ]);
 

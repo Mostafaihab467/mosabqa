@@ -1,79 +1,129 @@
 @extends('main.auth.auth')
 @section('pageContent')
     <div class="d-flex flex-column flex-lg-row-fluid w-lg-50 p-10">
-        <!--begin::Form-->
-        <form class="form w-100" id="kt_sign_in_form"
-              action="{{route('register')}}" method="post">
-            @include('general-includes.questions.choose')
+        @php
+            $register = \App\Models\Lookup::where('name', 'registration')->first();
+        @endphp
+        @if($register && $register->record_state == 1 && $register->value == 1)
             <!--begin::Form-->
-            <div class="d-flex flex-center flex-column flex-lg-row-fluid">
-                <!--begin::Wrapper-->
-                <div class="w-lg-500px p-10">
-                    @csrf
-                    <!--begin::Heading-->
-                    <div class="text-center mb-11">
-                        <!--begin::Title-->
-                        <h1 class="text-dark fw-bolder mb-3">{{__('admin.Sign up')}}</h1>
-                        <!--end::Title-->
-                    </div>
-                    <!--begin::Heading-->
-                    <!--begin::Input group=-->
-                    <div class="fv-row mb-8">
-                        <!--begin::Nid-->
-                        <div id="nid-group">
-                            <label for="name">
-                                {{__('admin.Name')}}
-                            </label>
-                            <input type="text" placeholder="{{__('admin.Name')}}" name="name" id="name"
-                                   autocomplete="off"
-                                   class="form-control bg-transparent @error('name') is-invalid @enderror" required
-                                   value="{{old('name')}}"
-                            />
-                            @error('name')
-                            <div class="fv-plugins message-container invalid-feedback">{{$message}}</div>
-                            @enderror
+            <form class="form w-100" id="kt_sign_in_form"
+                  action="{{route('register')}}" method="post">
+                @include('general-includes.questions.choose')
+                <!--begin::Form-->
+                <div class="d-flex flex-center flex-column flex-lg-row-fluid">
+                    <!--begin::Wrapper-->
+                    <div class="w-lg-500px p-10">
+                        @csrf
+                        <!--begin::Heading-->
+                        <div class="text-center mb-11">
+                            <!--begin::Title-->
+                            <h1 class="text-dark fw-bolder mb-3">{{__('admin.Sign up')}}</h1>
+                            <!--end::Title-->
                         </div>
-                        <!--end::Nid-->
-                        <!--begin::Nid-->
-                        <div id="nid-group" class="mt-5">
-                            <label for="nid">
-                                {{__('admin.Nid')}}
-                            </label>
-                            <input type="text" placeholder="{{__('admin.Nid')}}" name="nid" id="nid" autocomplete="off"
-                                   class="form-control bg-transparent @error('nid') is-invalid @enderror" required
-                                   value="{{old('nid')}}"
-                            />
-                            @error('nid')
-                            <div class="fv-plugins message-container invalid-feedback">{{$message}}</div>
-                            @enderror
+                        <!--begin::Heading-->
+                        <!--begin::Input group=-->
+                        <div class="fv-row mb-8">
+                            <!--begin::Name-->
+                            <div id="name-group">
+                                <label for="name">
+                                    {{__('admin.Name')}}
+                                </label>
+                                <input type="text" placeholder="{{__('admin.Name')}}" name="name" id="name"
+                                       autocomplete="off"
+                                       class="form-control bg-transparent @error('name') is-invalid @enderror" required
+                                       value="{{old('name')}}"
+                                />
+                                @error('name')
+                                <div class="fv-plugins message-container invalid-feedback">{{$message}}</div>
+                                @enderror
+                            </div>
+                            <!--end::Name-->
+                            <!--begin::Degree-->
+                            <div id="degree-group" class="mt-5">
+                                <label for="degree">
+                                    {{__('admin.Your degree in preparatory school')}}
+                                </label>
+                                <input type="number" min="0" max="490" placeholder="{{__('admin.Degree')}}"
+                                       name="degree" id="degree"
+                                       autocomplete="off"
+                                       class="form-control bg-transparent @error('degree') is-invalid @enderror"
+                                       required
+                                       value="{{old('degree')}}"
+                                />
+                                @error('degree')
+                                <div class="fv-plugins message-container invalid-feedback">{{$message}}</div>
+                                @enderror
+                            </div>
+                            <!--end::Degree-->
+                            <!--begin::Degree-->
+                            <div id="degree-group" class="mt-5">
+                                <label for="school">
+                                    {{__('admin.Your school')}}
+                                </label>
+                                <select id="school" name="school" class="form-select" data-control="select2"
+                                        data-placeholder="{{__('admin.Select school')}}">
+                                    <option></option>
+                                    @foreach(\App\Models\School::all() as $school)
+                                        <option value="{{$school->id}}">{{$school->name}}</option>
+                                    @endforeach
+                                    <option value="other">{{__('admin.Other')}}</option>
+                                </select>
+                                <input type="text" placeholder="{{__('admin.School')}}" name="school_name"
+                                       id="school_name"
+                                       autocomplete="off"
+                                       class="form-control bg-transparent d-none"
+                                       value="{{old('school_name')}}"
+                                />
+                                @error('school')
+                                <div class="fv-plugins message-container invalid-feedback">{{$message}}</div>
+                                @enderror
+                            </div>
+                            <!--end::Degree-->
+                            <!--begin::Nid-->
+                            <div id="nid-group" class="mt-5">
+                                <label for="nid">
+                                    {{__('admin.Nid')}}
+                                </label>
+                                <input type="text" placeholder="{{__('admin.Nid')}}" name="nid" id="nid"
+                                       autocomplete="off"
+                                       class="form-control bg-transparent @error('nid') is-invalid @enderror" required
+                                       value="{{old('nid')}}"
+                                />
+                                @error('nid')
+                                <div class="fv-plugins message-container invalid-feedback">{{$message}}</div>
+                                @enderror
+                            </div>
                         </div>
-                    </div>
-                    <!--begin::Submit button-->
-                    <div class="d-grid mb-10">
-                        <button type="submit" id="sign_up_submit" class="btn btn-primary disabled">
-                            <!--begin::Indicator label-->
-                            <span class="indicator-label">{{__('admin.Sign up')}}</span>
-                            <!--end::Indicator label-->
-                            <!--begin::Indicator progress-->
-                            <span class="indicator-progress">
+                        <!--begin::Submit button-->
+                        <div class="d-grid mb-10">
+                            <button type="submit" id="sign_up_submit" class="btn btn-primary disabled">
+                                <!--begin::Indicator label-->
+                                <span class="indicator-label">{{__('admin.Sign up')}}</span>
+                                <!--end::Indicator label-->
+                                <!--begin::Indicator progress-->
+                                <span class="indicator-progress">
                             {{__('admin.Please wait')}}...
 										<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                            <!--end::Indicator progress-->
-                        </button>
+                                <!--end::Indicator progress-->
+                            </button>
+                        </div>
+                        <!--end::Submit button-->
+                        <!--begin::Sign up-->
+                        <div class="text-gray-500 text-center fw-semibold fs-6">
+                            {{__('admin.Do you have an account')}}
+                            <a href="{{route('login')}}"
+                               class="link-primary">{{__('admin.Sign In')}}</a></div>
+                        <!--end::Sign up-->
                     </div>
-                    <!--end::Submit button-->
-                    <!--begin::Sign up-->
-                    <div class="text-gray-500 text-center fw-semibold fs-6">
-                        {{__('admin.Do you have an account')}}
-                        <a href="{{route('login')}}"
-                           class="link-primary">{{__('admin.Sign In')}}</a></div>
-                    <!--end::Sign up-->
+                    <!--end::Wrapper-->
                 </div>
-                <!--end::Wrapper-->
-            </div>
-        </form>
-        <!--end::Form-->
-        <!--end::Form-->
+            </form>
+            <!--end::Form-->
+        @else
+            <h1 class="text-center mb-5">
+                {{__('admin.Register is closed')}}
+            </h1>
+        @endif
         <!--begin::Footer-->
         <div class="d-flex flex-center flex-wrap px-5">
             <!--begin::Links-->
@@ -81,7 +131,8 @@
                 <a href="tel:+201067554823" class="px-5" target="_blank">
                     <i class="fa-solid fa-phone" style="color: #3297FF;"></i>
                 </a>
-                <a href="https://www.facebook.com/people/%D8%A7%D8%B3%D8%A7%D9%85%D8%A9-%D8%A7%D9%84%D9%86%D8%AC%D8%A7%D8%B1/pfbid0BasM8rtwajFsvdp8BjcaFnoTUxy5FG2qcd58DFfyevkS7KQhwziUnCUf4TAcyz6jl/?mibextid=qi2Omg" class="px-5" target="_blank">
+                <a href="https://www.facebook.com/people/%D8%A7%D8%B3%D8%A7%D9%85%D8%A9-%D8%A7%D9%84%D9%86%D8%AC%D8%A7%D8%B1/pfbid0BasM8rtwajFsvdp8BjcaFnoTUxy5FG2qcd58DFfyevkS7KQhwziUnCUf4TAcyz6jl/?mibextid=qi2Omg"
+                   class="px-5" target="_blank">
                     <i class="fa-brands fa-facebook-f" style="color: #3297FF;"></i>
                 </a>
                 <a href="https://mgahed.com/"
@@ -126,6 +177,7 @@
     <script>
         // global variable to store the no of questions
         let noOfQs = 0;
+
         function getNoOfQs(type) {
             // ajax call to get no of questions
             $.ajax({
@@ -189,7 +241,7 @@
             }
             for (let i = 0; i < cnt; i++) {
                 $('.cards').append(`
-                        <div class="card col-md-4 col-6">
+                        <div class="card col-md-4 col-6 hide-no-category-question">
                         <div class="form-check form-check-custom form-check-solid form-check-lg">
                             <input onchange="check(this)" class="form-check-input" type="checkbox" value="" id="card${i}" name="cards[]"/>
                             <label class="form-check-label" for="card${i}">
@@ -202,6 +254,11 @@
             </label>
         </div>
 `);
+            }
+            if (noOfQs === 0) {
+                $('.hide-no-category-question').addClass('d-none');
+            } else {
+                $('.hide-no-category-question').removeClass('d-none');
             }
         });
 
@@ -235,6 +292,7 @@
             }
             return true;
         }
+
         function checkRandom() {
             // let all checkboxes not checked
             $('input[type="checkbox"]').prop('checked', false);
@@ -250,5 +308,15 @@
             }
             $('#count').html(noOfQs);
         }
+    </script>
+
+    <script>
+        $('#school').change(function () {
+            if ($(this).val() === 'other') {
+                $('#school_name').removeClass('d-none');
+            } else {
+                $('#school_name').addClass('d-none');
+            }
+        });
     </script>
 @endsection

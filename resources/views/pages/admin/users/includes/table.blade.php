@@ -14,6 +14,8 @@
             <th>{{__('admin.Category')}}</th>
             <th>{{__('admin.Gender')}}</th>
             <th>{{__('admin.Birth date')}}</th>
+            <th>{{__('admin.Preparatory school degree')}}</th>
+            <th>{{__('admin.School')}}</th>
             <th>{{__('admin.Degree')}}</th>
             <th>{{__('admin.Actions')}}</th>
         </tr>
@@ -29,9 +31,11 @@
                 <td>{{@$item->category->name}}</td>
                 <td>{{@$item->gender}}</td>
                 <td>{{@$item->birth_date}}</td>
+                <td>{{@$item->degree}}</td>
+                <td>{{@$item->school->name}}</td>
                 <td>
-                    <span class="badge badge-light-{{is_numeric($item->degree) && $item->degree >= $successPercentage ? 'success' : 'danger'}}">
-                    {{$item->degree}} %
+                    <span class="badge badge-light-{{is_numeric($item->gradeDegree) && $item->gradeDegree >= $successPercentage ? 'success' : 'danger'}}">
+                    {{$item->gradeDegree}} %
                     </span>
                 </td>
                 <td>

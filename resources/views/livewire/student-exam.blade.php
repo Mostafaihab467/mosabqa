@@ -51,16 +51,18 @@
                             <div class="row">
                                 <div class="mb-5 col-md-12">
                                     <h1>{!!$msg!!}</h1>
-                                    @php
-                                        $checkExtraQuestion = UserQuestionAnswers::query()->where('user_id', Auth::id())
-                                        ->where('category_id', \App\Models\Category::where('name', env('EXTRA_CATEGORY'))->first()->id)->first();
-                                    @endphp
-                                    @if(!$checkExtraQuestion && \App\Models\Lookup:: where('name', 'exam_start_date')->first()->value <= now())
-                                        <div class="fs-1">
-                                            {{__('admin.Start extra exam')}} {{env('EXTRA_CATEGORY')}}
-                                            <a class="btn btn-primary"
-                                               href="{{route('student.questions', ['category_id' => \App\Models\Category::where('name', env('EXTRA_CATEGORY'))->first()->id])}}">{{__('admin.Start test')}}</a>
-                                        </div>
+                                    @if(env('EXTRA_CATEGORY_STATUS', false))
+                                        @php
+                                            $checkExtraQuestion = UserQuestionAnswers::query()->where('user_id', Auth::id())
+                                            ->where('category_id', \App\Models\Category::where('name', env('EXTRA_CATEGORY'))->first()->id)->first();
+                                        @endphp
+                                        @if(!$checkExtraQuestion && \App\Models\Lookup:: where('name', 'exam_start_date')->first()->value <= now())
+                                            <div class="fs-1">
+                                                {{__('admin.Start extra exam')}} {{env('EXTRA_CATEGORY')}}
+                                                <a class="btn btn-primary"
+                                                   href="{{route('student.questions', ['category_id' => \App\Models\Category::where('name', env('EXTRA_CATEGORY'))->first()->id])}}">{{__('admin.Start test')}}</a>
+                                            </div>
+                                        @endif
                                     @endif
                                 </div>
                             </div>
