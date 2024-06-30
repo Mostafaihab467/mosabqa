@@ -23,7 +23,7 @@
             @endphp
             <div class="container-fluid h-100">
                 @role('student')
-                @if(\App\Models\Lookup:: where('name', 'exam_start_date')->first()->value > now())
+                @if(\App\Models\Lookup::where('name', 'exam_start_date')->first()->value > now())
                     <h1 class="text-center d-flex flex-column h-100 align-content-center justify-content-center">
                             <span class="text-danger" style="font-size: 50px;">
                                 {{__('admin.The test has not started yet')}}

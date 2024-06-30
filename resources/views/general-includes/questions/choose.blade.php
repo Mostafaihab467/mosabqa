@@ -28,13 +28,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 hide-no-category-question">
+                <div class="col-md-6 d-none hide-no-category-question">
                     <button type="button" onclick="checkRandom()" class="btn btn-primary disabled" id="randomChoose">
                         {{__('admin.Random choose')}}
                     </button>
                 </div>
             </div>
-            <h3 class="text-center hide-no-category-question">
+            <h3 class="text-center d-none hide-no-category-question">
                 {{__('admin.You choose')}} <span id="count">0</span> {{__('admin.From')}} <span id="totalQs">15</span>
             </h3>
             <div class="cards row d-none hide-no-category-question" id="checkBoxCards">

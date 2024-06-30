@@ -7,7 +7,7 @@
         @php
             $currentRouteName = request()->route()->getName();
         @endphp
-        <!--begin::Menu-->
+            <!--begin::Menu-->
         <div class="menu menu-column menu-rounded menu-sub-indention fw-semibold px-3"
              id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
             @role('super-admin|admin')
@@ -205,17 +205,19 @@
 
             <!--Questions-->
             <div class="menu-item">
-                <!--begin:Menu link-->
-                <a class="menu-link @if(request()->routeIs('student.questions')){{'active'}}@endif"
-                   href="{{route('student.questions')}}">
+                @if(now() >= \App\Models\Lookup::where('name', 'exam_start_date')->first()->value)
+                    <!--begin:Menu link-->
+                    <a class="menu-link @if(request()->routeIs('student.questions')){{'active'}}@endif"
+                       href="{{route('student.questions')}}">
                     <span class="menu-icon">
                         <i class="fa fa-list"></i>
                     </span>
-                    <span class="menu-title">{{__('admin.Exam')}}</span>
-                </a>
-                <!--end:Menu link-->
+                        <span class="menu-title">{{__('admin.Exam')}}</span>
+                    </a>
+                    <!--end:Menu link-->
+                @endif
 
-                @if(now() >= \App\Models\Lookup::where('name', 'exam_end_date')->first()->value && now())
+                @if(now() >= \App\Models\Lookup::where('name', 'exam_end_date')->first()->value)
                     <!--begin:Menu link-->
                     <a class="menu-link @if(request()->routeIs('student.answers')){{'active'}}@endif"
                        href="{{route('student.answers')}}">
